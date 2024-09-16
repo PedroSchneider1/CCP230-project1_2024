@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "funcoes.h"
+#include <time_t>
 
 typedef struct
 {
-    char cpf[12];
+    char cpf[11];
     char senha[255];
-    float saldoRs;
+    float saldoReais;
     double saldoBTC;
     double saldoETH;
     double saldoRIPPLE;
@@ -15,21 +17,29 @@ typedef struct
 
 typedef struct{
 
-    double BTC;
-    float txCompraBTC;
-    float txVendaBTC;
-    double ETH;
-    float txCompraETH;
-    float txVendaEth;
-    double RIPPLE;
-    float txCompraRIPPLE;
-    float txVendaRIPPLE;
+    float cotacao;
+    float txVenda;
+    float txCompra;
 
 }Criptomoedas;
+
+typedef struct{
+
+    int qttExtratos;
+    float saldoReais;
+    double saldoBTC;
+    double saldoETH;
+    double saldoRIPPLE;
+    time_t Data;
+
+}Extratos;
 
 
 int main(){
 
+
+    int retorno = ExibirMenuVisitante();
+    printf("%d", retorno);
 
 
     return 0;
