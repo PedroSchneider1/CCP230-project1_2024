@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "funcoes.h"
 
-int ExibirMenuVisitante(){
+int exibirMenuVisitante(){
 
     int menu;
     while(1)
