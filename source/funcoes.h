@@ -4,7 +4,7 @@
 
 typedef struct
 {
-    char cpf[11];
+    char cpf[12];
     char senha[255];
     float saldoReais;
     double saldoBTC;
@@ -15,6 +15,7 @@ typedef struct
 
 typedef struct{
 
+    char nomeCripto[255];
     float cotacao;
     float txVenda;
     float txCompra;
@@ -32,9 +33,11 @@ typedef struct{
 
 }Extratos;
 
-int ExibirMenuVisitante();
+int exibirMenuVisitante();
 void limpaBuffer();
-int ExibirMenuCliente();
+int exibirMenuCliente();
 int cadastro(Usuario *ptrUsuario);
+int verificaCPF(Usuario *ptrUsuario);
+int login(Usuario *ptrUsuario);
 
 #endif
