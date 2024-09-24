@@ -49,11 +49,20 @@ int main()
             printf("Digite seu CPF: ");
             fgets(ptrUsuario->cpf, sizeof(ptrUsuario->cpf), stdin);
 
-            limpaBuffer();
-            printf("Digite sua senha: ");
-            fgets(ptrUsuario->senha, sizeof(ptrUsuario->senha), stdin);
-            status = cadastro(ptrUsuario);
-            status == 1 ? printf("CPF já cadastrado\n") : printf("Cadastro realizado com sucesso\n");
+            status = verificaCPF(ptrUsuario); // 1 = CPF já cadastrado, 0 = CPF não cadastrado
+            if(status)
+            {
+                printf("CPF já cadastrado\n");
+                break;
+            }
+            else
+            {
+                limpaBuffer();
+                printf("Digite sua senha: ");
+                fgets(ptrUsuario->senha, sizeof(ptrUsuario->senha), stdin);
+                cadastro(ptrUsuario);
+                break;
+            }
             break;
         case 2:
             limpaBuffer();
