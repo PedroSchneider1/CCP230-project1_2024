@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "funcoes.h"
 
 int exibirMenuCliente(){
@@ -25,14 +26,23 @@ int exibirMenuCliente(){
         printf("7 - Sair\n");
 
         scanf("%d", &menu);
-        if(menu > 0 && menu < 8)
+        switch(menu)
         {
-            return menu;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                exit(0);    
         }
-        else
-        {
-            printf("Opcao Invalida. Tente novamente\n\n");
-            limpaBuffer();
-        }   
+        limpaBuffer();   
     }
 }
