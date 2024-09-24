@@ -50,9 +50,14 @@ int main()
             fgets(ptrUsuario->cpf, sizeof(ptrUsuario->cpf), stdin);
 
             status = verificaCPF(ptrUsuario); // 1 = CPF já cadastrado, 0 = CPF não cadastrado
-            if(status)
+            if(status == 1)
             {
                 printf("CPF já cadastrado\n");
+                break;
+            }
+            else if (status == 2)
+            {
+                printf("Erro ao abrir o arquivo\n");
                 break;
             }
             else
