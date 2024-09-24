@@ -4,7 +4,6 @@
 int cadastro(Usuario *ptrUsuario){
 
     FILE *ptrArquivo;
-    char linha[255];
     int bytes = sizeof(Usuario);
 
     ptrArquivo = fopen("clientes.bin", "ab");
@@ -14,25 +13,19 @@ int cadastro(Usuario *ptrUsuario){
         ptrArquivo = fopen("clientes.bin", "wb");
     }
 
-    fwrite(ptrUsuario, bytes, 1, ptrArquivo);
-    fclose(ptrArquivo);
+    ptrUsuario->saldoBTC = 0.0; 
+    ptrUsuario->saldoETH = 0.0;
+    ptrUsuario->saldoRIPPLE = 0.0;
+    ptrUsuario->saldoReais = 0.0;
 
-    // Abrir o arquivo para leitura
-    ptrArquivo = fopen("clientes.bin", "rb");
-    if (ptrArquivo == NULL) {
-        perror("Erro ao abrir o arquivo para leitura");
+    if(verificaCPF(ptrUsuario))
+    {
+        fclose(ptrArquivo);
         return 1;
     }
 
-    while(fread(ptrUsuario, bytes, 1, ptrArquivo) == 1)
-    {
-        printf("CPF do cliente: %s", ptrUsuario->cpf);
-        printf("Senha do cliente: %s", ptrUsuario->senha);
-        printf("Saldo BTC: %.2f\n", ptrUsuario->saldoBTC);
-        printf("Saldo ETH: %.2f\n", ptrUsuario->saldoETH);
-        printf("Saldo RIPPLE: %.2f\n", ptrUsuario->saldoRIPPLE);
-        printf("Saldo em Reais: %.2f\n", ptrUsuario->saldoReais);
-    }
-
+    fwrite(ptrUsuario, bytes, 1, ptrArquivo);
     fclose(ptrArquivo);
+
+    return 0;
 }
