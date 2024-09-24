@@ -18,12 +18,6 @@ int cadastro(Usuario *ptrUsuario){
     ptrUsuario->saldoRIPPLE = 0.0;
     ptrUsuario->saldoReais = 0.0;
 
-    if(verificaCPF(ptrUsuario))
-    {
-        fclose(ptrArquivo);
-        return 1;
-    }
-
     fwrite(ptrUsuario, bytes, 1, ptrArquivo);
     fclose(ptrArquivo);
 
