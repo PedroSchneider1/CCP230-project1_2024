@@ -1,5 +1,5 @@
 # Nome do executável
-TARGET = exchange
+TARGET = exchange.exe
 
 # Compilador
 CC = gcc
