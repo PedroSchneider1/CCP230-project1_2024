@@ -32,8 +32,6 @@ typedef struct{
 
 }Extratos;
 
-
-
 int ExibirMenuVisitante();
 void limpaBuffer();
 int ExibirMenuCliente();
