@@ -9,9 +9,15 @@ int verificaCPF(Usuario *ptrUsuario){
 
     // Abrir o arquivo para leitura
     ptrArquivo = fopen("clientes.bin", "rb");
-    if (ptrArquivo == NULL) {
-        perror("Erro ao abrir o arquivo para leitura");
-        return 1;
+    if (ptrArquivo == NULL)
+    {
+        // Se o arquivo não existir, ele será criado
+        ptrArquivo = fopen("clientes.bin", "wb");
+        if (ptrArquivo == NULL)
+        {
+            perror("Erro ao criar o arquivo");
+            return 2;
+        }
     }
 
     Usuario usuario;
