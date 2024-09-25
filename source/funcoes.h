@@ -33,8 +33,8 @@ typedef struct{
 
 }Extratos;
 
-int exibirMenuVisitante();
 void limpaBuffer();
+int exibirMenuVisitante();
 int exibirMenuCliente();
 int cadastro(Usuario *ptrUsuario);
 int verificaCPF(Usuario *ptrUsuario);
