@@ -8,7 +8,6 @@ int exibirMenuCliente()
 
     while (1)
     {
-        printf("Login Realizado com Sucesso!\n");
         // Consultar extrato de operações da carteira de investimentos​: salvar em arquivo texto os dados
         // do usuário e todas as informações de transações (data, valores e taxas)
         printf("1 - Exibir Saldo\n");

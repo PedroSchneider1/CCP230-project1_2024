@@ -9,8 +9,8 @@ int login(Usuario *ptrUsuario){
     
     ptrArquivo = fopen("clientes.bin", "rb");
     if (ptrArquivo == NULL) {
-        perror("Erro ao abrir o arquivo para leitura");
-        return 1;
+        perror("Não há usuarios cadastrados");
+        return 0;
     }
 
     while(fread(&usuario, sizeof(Usuario), 1, ptrArquivo) == 1)

@@ -41,21 +41,22 @@ int main()
 
     do
     {
-        retorno = exibirMenuVisitante();
+        retorno = exibirMenuVisitante(); // Ensure exibirMenuVisitante takes no arguments
         switch (retorno)
         {
+        
+        //cadastro
         case 1:
-            limpaBuffer();
             printf("Digite seu CPF: ");
             fgets(ptrUsuario->cpf, sizeof(ptrUsuario->cpf), stdin);
 
             status = verificaCPF(ptrUsuario); // 1 = CPF já cadastrado, 0 = CPF não cadastrado
-            if(status == 1)
+            if(status == 0)
             {
                 printf("CPF já cadastrado\n");
                 break;
             }
-            else if (status == 2)
+            else if(status == 2)
             {
                 printf("Erro ao abrir o arquivo\n");
                 break;
@@ -69,6 +70,8 @@ int main()
                 break;
             }
             break;
+
+        //login
         case 2:
             limpaBuffer();
             printf("Digite seu CPF: ");
@@ -81,15 +84,18 @@ int main()
             if(status)
             {
                 cliente = 1;
+                printf("Login Realizado com Sucesso!\n");
             }
             else
             {
                 printf("CPF ou senha inválidos\n");
             }
             break;
+
         case 3:
             exit(0);
             break;
+
         default:
             printf("Opção inválida, finalizando o código...");
             exit(1);
@@ -117,6 +123,15 @@ int main()
                 }
                 break;
             case 2:
+                status = depositar(ptrUsuario);
+                if(status == 0)
+                {
+                    printf("Erro ao abrir o arquivo\n");
+                }
+                else
+                {
+                    printf("Depósito realizado com sucesso\n");
+                }
                 break;
             case 3:
                 break;
