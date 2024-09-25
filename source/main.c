@@ -8,7 +8,7 @@ int main()
     FILE *ptrArquivo;
 
     ptrArquivo = fopen("criptomoedas.bin", "rb");
-    if (ptrArquivo == NULL) //só cria se não existir
+    if (ptrArquivo == NULL) // só cria se não existir
     {
         ptrArquivo = fopen("criptomoedas.bin", "wb");
         if (ptrArquivo == NULL)
@@ -44,19 +44,20 @@ int main()
         retorno = exibirMenuVisitante(); // Ensure exibirMenuVisitante takes no arguments
         switch (retorno)
         {
-        
-        //cadastro
+
+        // cadastro
         case 1:
+            limpaBuffer();
             printf("Digite seu CPF: ");
             fgets(ptrUsuario->cpf, sizeof(ptrUsuario->cpf), stdin);
 
             status = verificaCPF(ptrUsuario); // 1 = CPF já cadastrado, 0 = CPF não cadastrado
-            if(status == 0)
+            if (status == 0)
             {
                 printf("CPF já cadastrado\n");
                 break;
             }
-            else if(status == 2)
+            else if (status == 2)
             {
                 printf("Erro ao abrir o arquivo\n");
                 break;
@@ -71,7 +72,7 @@ int main()
             }
             break;
 
-        //login
+        // login
         case 2:
             limpaBuffer();
             printf("Digite seu CPF: ");
@@ -81,7 +82,7 @@ int main()
             printf("Digite sua senha: ");
             fgets(ptrUsuario->senha, sizeof(ptrUsuario->senha), stdin);
             status = login(ptrUsuario); // 1 = logado, 0 = não logado
-            if(status)
+            if (status)
             {
                 cliente = 1;
                 printf("Login Realizado com Sucesso!\n");
@@ -124,7 +125,7 @@ int main()
                 break;
             case 2:
                 status = depositar(ptrUsuario);
-                if(status == 0)
+                if (status == 0)
                 {
                     printf("Erro ao abrir o arquivo\n");
                 }
@@ -133,7 +134,23 @@ int main()
                     printf("Depósito realizado com sucesso\n");
                 }
                 break;
+
             case 3:
+
+                status = sacar(ptrUsuario);
+                if (status == 0)
+                {
+                    printf("Usuario nao encontrado\n");
+                }
+                else if(status == -1)
+                {
+                    printf("Erro ao abrir o arquivo\n");
+                }
+                else
+                {
+                    printf("Saque realizado com sucesso\n");
+                }
+
                 break;
             case 4:
                 break;
@@ -146,7 +163,7 @@ int main()
             }
             limpaBuffer();
 
-        } while(retorno != 7);
+        } while (retorno != 7);
     }
 
     return 0;

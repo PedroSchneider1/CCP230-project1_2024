@@ -41,5 +41,6 @@ int verificaCPF(Usuario *ptrUsuario);
 int login(Usuario *ptrUsuario);
 int exibirSaldo(Usuario *ptrUsuario);
 int depositar(Usuario *ptrUsuario);
+int sacar(Usuario *ptrUsuario);
 
 #endif
