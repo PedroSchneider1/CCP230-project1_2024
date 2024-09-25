@@ -37,7 +37,7 @@ int main()
     Usuario usuario, *ptrUsuario;
     ptrUsuario = &usuario;
 
-    int retorno, status;
+    int retorno, status, cliente = 0;
 
     do
     {
@@ -80,7 +80,7 @@ int main()
             status = login(ptrUsuario); // 1 = logado, 0 = não logado
             if(status)
             {
-                exibirMenuCliente();
+                cliente = 1;
             }
             else
             {
@@ -92,10 +92,47 @@ int main()
             break;
         default:
             printf("Opção inválida, finalizando o código...");
+            exit(1);
             break;
         }
 
-    } while (retorno != 3 || retorno != 7);
+    } while (!cliente && retorno != 3);
+
+    if (cliente)
+    {
+        do
+        {
+            retorno = exibirMenuCliente();
+            switch (retorno)
+            {
+            case 1:
+                status = exibirSaldo(ptrUsuario);
+                if (status == 2)
+                {
+                    printf("Erro ao abrir o arquivo\n");
+                }
+                else if (status == 0)
+                {
+                    printf("CPF não cadastrado\n");
+                }
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                exit(0);
+            }
+            limpaBuffer();
+
+        } while(retorno != 7);
+    }
 
     return 0;
 }

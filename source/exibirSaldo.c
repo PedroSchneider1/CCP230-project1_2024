@@ -16,19 +16,20 @@ int exibirSaldo(Usuario *ptrUsuario){
         return 2;
     }
     
-
-    while(fread(ptrUsuario, bytes, 1, ptrArquivo) == 1)
+    while(fread(&usuario, bytes, 1, ptrArquivo) == 1)
     {
-        if(strcmp(ptrUsuario->cpf, usuario.cpf) == 0)
+        if(strcmp(usuario.cpf, ptrUsuario->cpf) == 0)
         {
-            printf("CPF: %s\n", ptrUsuario->cpf);
+            printf("\nCPF: %s\n", ptrUsuario->cpf);
             printf("Saldo em R$: %.2f\n", ptrUsuario->saldoReais);
             printf("Saldo em Bitcoin: %.8lf\n", ptrUsuario->saldoBTC);
             printf("Saldo em Ethereum: %.8lf\n", ptrUsuario->saldoETH);
-            printf("Saldo em Ripple: %.8lf\n", ptrUsuario->saldoRIPPLE);
+            printf("Saldo em Ripple: %.8lf\n\n", ptrUsuario->saldoRIPPLE);
+            fclose(ptrArquivo);
             return 1;
             break;
         }
     }
+    fclose(ptrArquivo);
     return 0;
 }
