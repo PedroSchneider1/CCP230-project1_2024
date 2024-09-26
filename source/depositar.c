@@ -49,6 +49,7 @@ int depositar(Usuario *ptrUsuario)
         fwrite(&usuario, bytes, 1, ptrArquivo);
 
         fclose(ptrArquivo);
+        limpaBuffer();
         return 1; //sucesso ao exibir o saldo
     }
     else

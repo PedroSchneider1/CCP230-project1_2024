@@ -42,5 +42,6 @@ int login(Usuario *ptrUsuario);
 int exibirSaldo(Usuario *ptrUsuario);
 int depositar(Usuario *ptrUsuario);
 int sacar(Usuario *ptrUsuario);
+int comprarCripto(Usuario *ptrUsuario);
 
 #endif
