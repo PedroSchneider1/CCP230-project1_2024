@@ -21,11 +21,13 @@ int main()
             const char *nomesCriptos[] = {"Bitcoin", "Ethereum", "Ripple"};
             const float taxasCompra[] = {2.0, 1.0, 1.0};
             const float taxasVenda[] = {3.0, 2.0, 1.0};
+            const float cotacoes[] = {50000.0, 2000.0, 10.0};
+
             for (int i = 0; i < 3; i++)
             {
                 Criptomoedas criptomoedas;
                 strcpy(criptomoedas.nomeCripto, nomesCriptos[i]);
-                criptomoedas.cotacao = 0.0;
+                criptomoedas.cotacao = cotacoes[i];
                 criptomoedas.txCompra = taxasCompra[i];
                 criptomoedas.txVenda = taxasVenda[i];
                 fwrite(&criptomoedas, sizeof(Criptomoedas), 1, ptrArquivo);
@@ -153,6 +155,19 @@ int main()
 
                 break;
             case 4:
+                status = comprarCripto(ptrUsuario);
+                if (status == 0)
+                {
+                    printf("Usuario nao encontrado\n");
+                }
+                else if(status == -1)
+                {
+                    printf("Erro ao abrir o arquivo\n");
+                }
+                else
+                {
+                    printf("Compra realizada com sucesso\n");
+                }
                 break;
             case 5:
                 break;
