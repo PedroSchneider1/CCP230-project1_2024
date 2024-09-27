@@ -21,7 +21,7 @@ int main()
             const char *nomesCriptos[] = {"Bitcoin", "Ethereum", "Ripple"};
             const float taxasCompra[] = {2.0, 1.0, 1.0};
             const float taxasVenda[] = {3.0, 2.0, 1.0};
-            const float cotacoes[] = {50000.0, 2000.0, 10.0};
+            const float cotacoes[] = {5.0000, 2.000, 10.0};
 
             for (int i = 0; i < 3; i++)
             {
@@ -194,6 +194,21 @@ int main()
                 }
                 break;
             case 6:
+                status = atualizarCotacao();
+
+                if(status == -1)
+                {
+                    printf("Erro ao abrir o arquivo\n");
+                }
+                else if(status == 0)
+                {
+                    printf("Criptomoeda não encontrada\n");
+                }
+                else
+                {
+                    printf("Cotação atualizada com sucesso\n");
+                }
+
                 break;
             case 7:
                 exit(0);
