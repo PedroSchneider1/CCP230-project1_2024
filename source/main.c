@@ -127,9 +127,13 @@ int main()
                 break;
             case 2:
                 status = depositar(ptrUsuario);
-                if (status == 0)
+                if (status == -1)
                 {
                     printf("Erro ao abrir o arquivo\n");
+                }
+                else if(status == 0)
+                {
+                    printf("Usuario nao encontrado\n");
                 }
                 else
                 {

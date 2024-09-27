@@ -49,13 +49,12 @@ int depositar(Usuario *ptrUsuario)
         fwrite(&usuario, bytes, 1, ptrArquivo);
 
         fclose(ptrArquivo);
-        limpaBuffer();
         return 1; //sucesso ao exibir o saldo
     }
     else
     {
         printf("CPF não cadastrado\n");
-        return -1;
+        return 0;
     }
     
     return 0;
