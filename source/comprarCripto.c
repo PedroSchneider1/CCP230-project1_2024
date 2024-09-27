@@ -40,6 +40,7 @@ int comprarCripto(Usuario *ptrUsuario)
         if (strcmp(senha, usuario.senha) != 0)
         {
             printf("Senha incorreta\n");
+            fclose(ptrArquivo);
             return -1;
         }
 
@@ -63,6 +64,30 @@ int comprarCripto(Usuario *ptrUsuario)
             return -1;
         }
 
+        // Busca e exibe a taxa da criptomoeda escolhida
+        int foundCripto = 0;
+        while (fread(&criptomoedas, bytesCripto, 1, ptrArquivoCripto) == 1)
+        {
+            if ((menu == 1 && strcmp(criptomoedas.nomeCripto, "Bitcoin") == 0) ||
+                (menu == 2 && strcmp(criptomoedas.nomeCripto, "Ethereum") == 0) ||
+                (menu == 3 && strcmp(criptomoedas.nomeCripto, "Ripple") == 0))
+            {
+                foundCripto = 1;
+
+                // Exibe a taxa de compra
+                printf("O valor de taxa de compra é de %.2f%% para a moeda %s\n", criptomoedas.txCompra, criptomoedas.nomeCripto);
+                break;
+            }
+        }
+
+        if (!foundCripto)
+        {
+            printf("Criptomoeda não encontrada.\n");
+            fclose(ptrArquivoCripto);
+            fclose(ptrArquivo);
+            return -1;
+        }
+
         // Solicita o valor da compra
         do
         {
@@ -75,46 +100,29 @@ int comprarCripto(Usuario *ptrUsuario)
             }
         } while (valorCompra < 0);
 
-        // Processa a compra de acordo com a criptomoeda escolhida
-        int foundCripto = 0;
-        while (fread(&criptomoedas, bytesCripto, 1, ptrArquivoCripto) == 1)
-        {
-            if ((menu == 1 && strcmp(criptomoedas.nomeCripto, "Bitcoin") == 0) ||
-                (menu == 2 && strcmp(criptomoedas.nomeCripto, "Ethereum") == 0) ||
-                (menu == 3 && strcmp(criptomoedas.nomeCripto, "Ripple") == 0))
-            {
+        // Aplica a taxa de compra
+        float taxa = criptomoedas.txCompra / 100.0;
+        float valorFinalCompra = valorCompra - (valorCompra * taxa);
 
-                // Atualiza o saldo da criptomoeda correspondente
-                if (menu == 1)
-                    usuario.saldoBTC += valorCompra / criptomoedas.cotacao;
-                else if (menu == 2)
-                    usuario.saldoETH += valorCompra / criptomoedas.cotacao;
-                else if (menu == 3)
-                    usuario.saldoRIPPLE += valorCompra / criptomoedas.cotacao;
+        // Atualiza o saldo da criptomoeda correspondente
+        if (menu == 1)
+            usuario.saldoBTC += valorFinalCompra / criptomoedas.cotacao;
+        else if (menu == 2)
+            usuario.saldoETH += valorFinalCompra / criptomoedas.cotacao;
+        else if (menu == 3)
+            usuario.saldoRIPPLE += valorFinalCompra / criptomoedas.cotacao;
 
-                // Atualiza o saldo em reais
-                usuario.saldoReais -= valorCompra;
-                foundCripto = 1;
-                break;
-            }
-        }
+        // Atualiza o saldo em reais
+        usuario.saldoReais -= valorCompra;
 
         fclose(ptrArquivoCripto);
 
-        if (foundCripto)
-        {
-            // Posiciona o ponteiro no registro do usuário e sobrescreve o registro
-            fseek(ptrArquivo, posicaoArquivo, SEEK_SET);
-            fwrite(&usuario, bytes, 1, ptrArquivo);
-            fclose(ptrArquivo);
-            return 1; // Sucesso
-        }
-        else
-        {
-            printf("Criptomoeda não encontrada.\n");
-        }
-
+        // Posiciona o ponteiro no registro do usuário e sobrescreve o registro
+        fseek(ptrArquivo, posicaoArquivo, SEEK_SET);
+        fwrite(&usuario, bytes, 1, ptrArquivo);
         fclose(ptrArquivo);
+
+        return 1; // Sucesso
     }
     else
     {
