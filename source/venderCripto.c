@@ -108,15 +108,18 @@ int venderCripto(Usuario *ptrUsuario)
             return 2;
         }
 
-        // Aplica a taxa de venda e calcula o valor final
-        float taxa = criptomoedas.txVenda / 100.0;
-        float valorFinalVenda = valorVenda * criptomoedas.cotacao * (1 - taxa);
+        // Converte o valor da venda em criptomoedas para reais
+        float valorVendaReais = valorVenda * criptomoedas.cotacao;
+
+        // Aplica a taxa de venda, subtraindo o percentual do valor em reais
+        float valorFinalVenda = valorVendaReais - (valorVendaReais * (criptomoedas.txVenda / 100));
 
         // Atualiza o saldo do usuário
         if (menu == 1)
         {
+            // Adiciona o valor final
             usuario.saldoReais += valorFinalVenda;
-            usuario.saldoBTC -= valorVenda;
+            usuario.saldoBTC -= valorVenda;        
         }
         else if (menu == 2)
         {
@@ -132,10 +135,10 @@ int venderCripto(Usuario *ptrUsuario)
         // Posiciona novamente no início do registro
         fseek(ptrArquivo, posicaoArquivo, SEEK_SET);
 
-        // Sobrescreve o registro
+        // Escreve o registro atualizado
         fwrite(&usuario, bytes, 1, ptrArquivo);
 
-        // Fecha os arquivos abertos
+        
         fclose(ptrArquivo);
         fclose(ptrArquivoCripto);
 
