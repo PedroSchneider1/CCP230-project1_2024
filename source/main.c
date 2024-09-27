@@ -174,6 +174,24 @@ int main()
                 }
                 break;
             case 5:
+                status = venderCripto(ptrUsuario);
+
+                if (status == 0)
+                {
+                    printf("Usuario nao encontrado\n");
+                }
+                else if(status == -1)
+                {
+                    printf("Erro ao abrir o arquivo\n");
+                }
+                else if(status == 2)
+                {
+                    printf("Saldo insuficiente para venda\n");
+                }
+                else
+                {
+                    printf("Venda realizada com sucesso\n");
+                }
                 break;
             case 6:
                 break;
