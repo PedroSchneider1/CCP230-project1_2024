@@ -21,7 +21,7 @@ int main()
             const char *nomesCriptos[] = {"Bitcoin", "Ethereum", "Ripple"};
             const float taxasCompra[] = {2.0, 1.0, 1.0};
             const float taxasVenda[] = {3.0, 2.0, 1.0};
-            const float cotacoes[] = {5.0000, 2.000, 10.0};
+            const float cotacoes[] = {50000, 20000, 10};
 
             for (int i = 0; i < 3; i++)
             {
