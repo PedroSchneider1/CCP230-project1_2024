@@ -110,17 +110,39 @@ int comprarCripto(Usuario *ptrUsuario)
         if (menu == 1)
         {
             usuario.saldoBTC += valorFinalCompra / criptomoedas.cotacao;
-            logExtrato(tipoOperacao, ptrUsuario, valorCompra, criptomoedas.txCompra, criptomoedas.nomeCripto);
+            usuario.qttExtrato++;
         }
         else if (menu == 2)
         {
             usuario.saldoETH += valorFinalCompra / criptomoedas.cotacao;
-            logExtrato(tipoOperacao, ptrUsuario, valorCompra, criptomoedas.txCompra, criptomoedas.nomeCripto);
         }
         else if (menu == 3)
         {
             usuario.saldoRIPPLE += valorFinalCompra / criptomoedas.cotacao;
-            logExtrato(tipoOperacao, ptrUsuario, valorCompra, criptomoedas.txCompra, criptomoedas.nomeCripto);
+        }
+
+        usuario.qttExtrato = contaExtrato(ptrUsuario);
+
+        if (usuario.qttExtrato >= 99)
+        {
+            printf("Limite de extratos atingido\n");
+        }
+        else
+        {
+            if (menu == 1)
+            {
+                strcpy(criptomoedas.nomeCripto, "Bitcoin");
+            }
+            else if (menu == 2)
+            {
+                strcpy(criptomoedas.nomeCripto, "Ethereum");
+            }
+            else if (menu == 3)
+            {
+                strcpy(criptomoedas.nomeCripto, "Ripple");
+            }
+
+            logExtrato(tipoOperacao, ptrUsuario, valorCompra, (taxa * 100), criptomoedas.nomeCripto);
         }
 
         // Atualiza o saldo em reais
