@@ -9,6 +9,8 @@ int venderCripto(Usuario *ptrUsuario)
     Usuario usuario;
     Criptomoedas criptomoedas;
 
+    const char *tipoOperacao = "Venda";
+
     int bytes = sizeof(Usuario);
     int bytesCripto = sizeof(Criptomoedas);
     float valorVenda = 0.0;
@@ -73,14 +75,14 @@ int venderCripto(Usuario *ptrUsuario)
                 foundCripto = 1;
 
                 // Exibe a taxa de venda
-                printf("O valor de taxa de venda é de %.2f%% para a moeda %s\n", criptomoedas.txVenda, criptomoedas.nomeCripto);
+                printf("O valor de taxa de venda e de %.2f%% para a moeda %s\n", criptomoedas.txVenda, criptomoedas.nomeCripto);
                 break;
             }
         }
 
         if (!foundCripto)
         {
-            printf("Criptomoeda não encontrada\n");
+            printf("Criptomoeda nao encontrada\n");
             fclose(ptrArquivo);
             fclose(ptrArquivoCripto);
             return -1;
@@ -93,7 +95,7 @@ int venderCripto(Usuario *ptrUsuario)
             scanf("%f", &valorVenda);
             if (valorVenda <= 0)
             {
-                printf("Valor de venda inválido.\n");
+                printf("Valor de venda invalido.\n");
             }
         } while (valorVenda <= 0);
 
@@ -119,17 +121,20 @@ int venderCripto(Usuario *ptrUsuario)
         {
             // Adiciona o valor final
             usuario.saldoReais += valorFinalVenda;
-            usuario.saldoBTC -= valorVenda;        
+            usuario.saldoBTC -= valorVenda;
+            logExtrato(tipoOperacao, ptrUsuario, valorFinalVenda, criptomoedas.txVenda, criptomoedas.nomeCripto);        
         }
         else if (menu == 2)
         {
             usuario.saldoReais += valorFinalVenda;
             usuario.saldoETH -= valorVenda;
+            logExtrato(tipoOperacao, ptrUsuario, valorFinalVenda, criptomoedas.txVenda, criptomoedas.nomeCripto);
         }
         else if (menu == 3)
         {
             usuario.saldoReais += valorFinalVenda;
             usuario.saldoRIPPLE -= valorVenda;
+            logExtrato(tipoOperacao, ptrUsuario, valorFinalVenda, criptomoedas.txVenda, criptomoedas.nomeCripto);
         }
 
         // Posiciona novamente no início do registro

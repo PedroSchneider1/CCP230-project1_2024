@@ -22,10 +22,10 @@ int exibirMenuCliente()
         printf("5 - Vender Criptomoedas\n");
         // Atualizar cotação das criptomoedas: usar valores aleatórios pra gerar mudanças de no máximo 5% e mínimo -5% do valor atual
         printf("6 - Atualizar Cotacoes\n");
-
-        printf("7 - Sair\n");
+        printf("7 - Consultar Extrato\n");
+        printf("8 - Sair\n");
         scanf("%d", &menu);
-        if(menu > 0 && menu < 8)
+        if(menu > 0 && menu < 9)
         {
             return menu;
         }

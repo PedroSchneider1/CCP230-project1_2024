@@ -38,7 +38,7 @@ int exibirSaldo(Usuario *ptrUsuario){
     }
     else
     {
-        printf("CPF não cadastrado\n");
+        printf("CPF nao cadastrado\n");
         return 0;
     }
 }

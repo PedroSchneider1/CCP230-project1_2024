@@ -24,14 +24,12 @@ typedef struct{
 
 typedef struct{
 
-    int qttExtratos;
-    float saldoReais;
-    double saldoBTC;
-    double saldoETH;
-    double saldoRIPPLE;
-    time_t Data;
-
-}Extratos;
+    char CPF[12];
+    char tipoOperacao[255];
+    time_t data;
+    float valor;
+    float taxaTransacao;
+}Extrato;
 
 void limpaBuffer();
 int exibirMenuVisitante();
@@ -45,5 +43,7 @@ int sacar(Usuario *ptrUsuario);
 int comprarCripto(Usuario *ptrUsuario);
 int venderCripto(Usuario *ptrUsuario);
 int atualizarCotacao();
+void logExtrato(const char *tipoOperacao, Usuario *ptrUsuario, float valor, float taxaTransacao, const char *nomeCripto);
+int consultaExtrato(Usuario *ptrUsuario);
 
 #endif

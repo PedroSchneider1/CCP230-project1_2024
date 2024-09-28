@@ -42,7 +42,7 @@ int atualizarCotacao()
             foundCripto = 1;
 
             // Exibe a cotação antiga
-            printf("O valor de cotacao da criptomoeda é de %.8lf para a moeda %s\n", criptomoedas.cotacao, criptomoedas.nomeCripto);
+            printf("O valor de cotacao da criptomoeda e de %.8lf para a moeda %s\n", criptomoedas.cotacao, criptomoedas.nomeCripto);
 
             // Gera a seed aleatória
             srand(time(NULL));
@@ -85,7 +85,7 @@ int atualizarCotacao()
     // Verifica se a criptomoeda foi encontrada
     if (!foundCripto)
     {
-        printf("Criptomoeda não encontrada.\n");
+        printf("Criptomoeda nao encontrada.\n");
         return 0;
     }
 

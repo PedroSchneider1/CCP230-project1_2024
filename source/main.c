@@ -56,7 +56,7 @@ int main()
             status = verificaCPF(ptrUsuario); // 1 = CPF já cadastrado, 0 = CPF não cadastrado
             if (status == 0)
             {
-                printf("CPF já cadastrado\n");
+                printf("CPF ja cadastrado\n");
                 break;
             }
             else if (status == 2)
@@ -137,7 +137,7 @@ int main()
                 }
                 else
                 {
-                    printf("Depósito realizado com sucesso\n");
+                    printf("Deposito realizado com sucesso\n");
                 }
                 break;
 
@@ -202,7 +202,7 @@ int main()
                 }
                 else if(status == 0)
                 {
-                    printf("Criptomoeda não encontrada\n");
+                    printf("Criptomoeda nao encontrada\n");
                 }
                 else
                 {
@@ -211,6 +211,21 @@ int main()
 
                 break;
             case 7:
+                status = consultaExtrato(ptrUsuario);
+                if(status == 0)
+                {
+                    printf("Extrato nao encontrado\n");
+                }
+                else if(status == -1)
+                {
+                    printf("Erro ao abrir o arquivo\n");
+                }
+                else
+                {
+                    printf("Extrato consultado com sucesso\n");
+                }
+                break;
+            case 8:
                 exit(0);
             }
             limpaBuffer();

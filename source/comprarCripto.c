@@ -9,6 +9,8 @@ int comprarCripto(Usuario *ptrUsuario)
     Usuario usuario;
     Criptomoedas criptomoedas;
 
+    const char *tipoOperacao = "Compra";
+
     int bytes = sizeof(Usuario);
     int bytesCripto = sizeof(Criptomoedas);
     float valorCompra = 0.0;
@@ -75,14 +77,14 @@ int comprarCripto(Usuario *ptrUsuario)
                 foundCripto = 1;
 
                 // Exibe a taxa de compra
-                printf("O valor de taxa de compra é de %.2f%% para a moeda %s\n", criptomoedas.txCompra, criptomoedas.nomeCripto);
+                printf("O valor de taxa de compra e de %.2f%% para a moeda %s\n", criptomoedas.txCompra, criptomoedas.nomeCripto);
                 break;
             }
         }
 
         if (!foundCripto)
         {
-            printf("Criptomoeda não encontrada.\n");
+            printf("Criptomoeda nao encontrada.\n");
             fclose(ptrArquivoCripto);
             fclose(ptrArquivo);
             return -1;
@@ -106,11 +108,20 @@ int comprarCripto(Usuario *ptrUsuario)
 
         // Atualiza o saldo da criptomoeda correspondente
         if (menu == 1)
+        {
             usuario.saldoBTC += valorFinalCompra / criptomoedas.cotacao;
+            logExtrato(tipoOperacao, ptrUsuario, valorCompra, criptomoedas.txCompra, criptomoedas.nomeCripto);
+        }
         else if (menu == 2)
+        {
             usuario.saldoETH += valorFinalCompra / criptomoedas.cotacao;
+            logExtrato(tipoOperacao, ptrUsuario, valorCompra, criptomoedas.txCompra, criptomoedas.nomeCripto);
+        }
         else if (menu == 3)
+        {
             usuario.saldoRIPPLE += valorFinalCompra / criptomoedas.cotacao;
+            logExtrato(tipoOperacao, ptrUsuario, valorCompra, criptomoedas.txCompra, criptomoedas.nomeCripto);
+        }
 
         // Atualiza o saldo em reais
         usuario.saldoReais -= valorCompra;
@@ -126,7 +137,7 @@ int comprarCripto(Usuario *ptrUsuario)
     }
     else
     {
-        printf("CPF não cadastrado\n");
+        printf("CPF nao cadastrado\n");
     }
 
     return -1;
