@@ -127,18 +127,21 @@ int main()
             printf("Digite seu CPF: ");
             fgets(ptrUsuario->cpf, sizeof(ptrUsuario->cpf), stdin);
 
-            limpaBuffer();
+            if (strlen(ptrUsuario->cpf) == 11) { // Limpa o buffer apenas se o CPF tiver 11 caracteres
+                limpaBuffer();
+            }
+            
             printf("Digite sua senha: ");
             fgets(ptrUsuario->senha, sizeof(ptrUsuario->senha), stdin);
             status = login(ptrUsuario); // 1 = logado, 0 = não logado
             if (status)
             {
                 cliente = 1;
-                printf("Login Realizado com Sucesso!\n");
+                printf("\nLogin realizado com sucesso!\n");
             }
             else
             {
-                printf("CPF ou senha inválidos\n");
+                printf("CPF ou senha invalidos\n\n");
             }
             break;
 
