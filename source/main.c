@@ -230,7 +230,7 @@ int main()
             }
             limpaBuffer();
 
-        } while (retorno != 7);
+        } while (retorno != 8);
     }
 
     return 0;
