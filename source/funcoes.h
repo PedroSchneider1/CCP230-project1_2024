@@ -4,6 +4,7 @@
 
 typedef struct
 {
+    int qttExtrato;
     char cpf[12];
     char senha[255];
     float saldoReais;

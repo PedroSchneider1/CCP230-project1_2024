@@ -50,8 +50,21 @@ int main()
         // cadastro
         case 1:
             limpaBuffer();
-            printf("Digite seu CPF: ");
-            fgets(ptrUsuario->cpf, sizeof(ptrUsuario->cpf), stdin);
+            int tamanhoCPF;
+            do
+            {
+                
+                printf("Digite seu CPF (11 digitos): ");
+                fgets(ptrUsuario->cpf, sizeof(ptrUsuario->cpf), stdin);
+                printf("%s\n", ptrUsuario->cpf);
+                tamanhoCPF = strlen(ptrUsuario->cpf);
+                printf("%d\n", tamanhoCPF);
+                // Verifica o comprimento
+                if (tamanhoCPF!= 12)
+                {
+                    printf("CPF invalido.\n");
+                }
+            } while (tamanhoCPF != 12); // Continua até ter 11 caracteres + \n
 
             status = verificaCPF(ptrUsuario); // 1 = CPF já cadastrado, 0 = CPF não cadastrado
             if (status == 0)
@@ -69,7 +82,15 @@ int main()
                 limpaBuffer();
                 printf("Digite sua senha: ");
                 fgets(ptrUsuario->senha, sizeof(ptrUsuario->senha), stdin);
-                cadastro(ptrUsuario);
+                status = cadastro(ptrUsuario);
+                if (status == -1)
+                {
+                    printf("Quantidade maxima de clientes atingida\n");
+                }
+                else
+                {
+                    printf("Cadastro realizado com sucesso\n");
+                }
                 break;
             }
             break;
