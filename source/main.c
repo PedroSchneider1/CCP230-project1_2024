@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "funcoes.h"
 
 int main()
@@ -43,30 +44,56 @@ int main()
 
     do
     {
-        retorno = exibirMenuVisitante(); // Ensure exibirMenuVisitante takes no arguments
+        retorno = exibirMenuVisitante();
         switch (retorno)
         {
 
         // cadastro
         case 1:
             limpaBuffer();
-            int tamanhoCPF;
+
+            size_t tamanhoCPF;
+            int isNumeric = 1;
+            
+            char cpf[255];
             do
             {
-                
                 printf("Digite seu CPF (11 digitos): ");
-                fgets(ptrUsuario->cpf, sizeof(ptrUsuario->cpf), stdin);
-                printf("%s\n", ptrUsuario->cpf);
-                tamanhoCPF = strlen(ptrUsuario->cpf);
-                printf("%d\n", tamanhoCPF);
+                fgets(cpf, sizeof(cpf), stdin);
+
+                tamanhoCPF = strlen(cpf);
                 // Verifica o comprimento
-                if (tamanhoCPF!= 12)
+                if (tamanhoCPF < 12 || tamanhoCPF > 13)
                 {
                     printf("CPF invalido.\n");
+                    printf("\t*Tamanho do CPF deve ser de 11 digitos.\n");
                 }
-            } while (tamanhoCPF != 12); // Continua até ter 11 caracteres + \n
 
+                // Verifica se todos os caracteres são dígitos
+                isNumeric = 1;
+                for (size_t i = 0; i < tamanhoCPF - 1; i++) {
+                    if (!isdigit(cpf[i])) {
+                        isNumeric = 0;
+                        break;
+                    }
+                }
+
+                if (!isNumeric) {
+                    printf("CPF invalido.\n");
+                    printf("\t*CPF deve conter apenas numeros.\n");
+                    continue;
+                }
+
+            } while (tamanhoCPF != 12 || !isNumeric); // Continua até ter 11 caracteres + \n
+
+            if (cpf[tamanhoCPF-1] == '\n') { // Remove o \n do fim da string
+                cpf[tamanhoCPF-1] = '\0';
+                tamanhoCPF--;
+            }
+
+            strcpy(ptrUsuario->cpf, cpf);
             status = verificaCPF(ptrUsuario); // 1 = CPF já cadastrado, 0 = CPF não cadastrado
+            
             if (status == 0)
             {
                 printf("CPF ja cadastrado\n");
@@ -79,7 +106,6 @@ int main()
             }
             else
             {
-                limpaBuffer();
                 printf("Digite sua senha: ");
                 fgets(ptrUsuario->senha, sizeof(ptrUsuario->senha), stdin);
                 status = cadastro(ptrUsuario);
