@@ -9,7 +9,7 @@ int sacar(Usuario *ptrUsuario)
     float valorSaque = 0.0;
     long posicaoArquivo;
     int bytes = sizeof(Usuario);
-
+    const char *tipoOperacao = "Saque";
 
     posicaoArquivo = verificaCPF(ptrUsuario);
 
@@ -49,6 +49,15 @@ int sacar(Usuario *ptrUsuario)
         fseek(ptrArquivo, posicaoArquivo, SEEK_SET);
         // sobrescreve o registro
         fwrite(&usuario, bytes, 1, ptrArquivo);
+        usuario.qttExtrato = contaExtrato(ptrUsuario);
+        if (usuario.qttExtrato >= 99)
+        {
+            printf("Limite de extratos atingido\n");
+        }
+        else
+        {
+            logExtrato(tipoOperacao, ptrUsuario, valorSaque, 0, "Real");
+        }
         fclose(ptrArquivo);
         return 1; // sucesso ao exibir o saldo
 

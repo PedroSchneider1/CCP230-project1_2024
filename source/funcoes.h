@@ -25,6 +25,7 @@ typedef struct{
 
 typedef struct{
 
+    char nomeMoeda[255];
     char CPF[12];
     char tipoOperacao[255];
     time_t data;
@@ -44,7 +45,8 @@ int sacar(Usuario *ptrUsuario);
 int comprarCripto(Usuario *ptrUsuario);
 int venderCripto(Usuario *ptrUsuario);
 int atualizarCotacao();
-void logExtrato(const char *tipoOperacao, Usuario *ptrUsuario, float valor, float taxaTransacao, const char *nomeCripto);
+void logExtrato(const char *tipoOperacao, Usuario *ptrUsuario, float valor, float taxaTransacao, const char *nomeMoeda);
 int consultaExtrato(Usuario *ptrUsuario);
+int contaExtrato(Usuario *ptrUsuario);
 
 #endif

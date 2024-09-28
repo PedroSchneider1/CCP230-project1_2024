@@ -4,7 +4,7 @@
 #include <time.h>
 #include "funcoes.h"
 
-void logExtrato(const char *tipoOperacao, Usuario *ptrUsuario, float valor, float taxaTransacao, const char *nomeCripto)
+void logExtrato(const char *tipoOperacao, Usuario *ptrUsuario, float valor, float taxaTransacao, const char *nomeMoeda)
 {
     FILE *ptrArquivoExtrato;
     time_t data;
@@ -26,6 +26,7 @@ void logExtrato(const char *tipoOperacao, Usuario *ptrUsuario, float valor, floa
         strcpy(extrato.tipoOperacao, tipoOperacao);
         extrato.valor = valor;
         extrato.taxaTransacao = taxaTransacao;
+        strcpy(extrato.nomeMoeda, nomeMoeda);
 
         fwrite(&extrato, sizeof(Extrato), 1, ptrArquivoExtrato);
         fclose(ptrArquivoExtrato);
@@ -42,8 +43,7 @@ int consultaExtrato(Usuario *ptrUsuario)
 
     if (ptrArquivoExtrato == NULL)
     {
-        printf("Erro ao abrir o arquivo de extrato\n");
-        exit(1);
+        ptrArquivoExtrato = fopen("extrato.bin", "wb");
     }
     else
     {
@@ -62,7 +62,8 @@ int consultaExtrato(Usuario *ptrUsuario)
                 //strftime converte a struct tm para string
                 strftime(dataFormatada, sizeof(dataFormatada), "%d-%m-%Y %H:%M:%S", tm_info);
                 printf("Data: %s\n", dataFormatada);
-                printf("Valor: %.2f\n", extrato.valor);
+                printf("Valor: R$%.2f\n", extrato.valor);
+                printf("Moeda negociada: %s\n", extrato.nomeMoeda);
                 printf("Taxa da transacao: %.2f%%\n\n", extrato.taxaTransacao);
                 foundExtrato = 1;
             }
@@ -77,4 +78,22 @@ int consultaExtrato(Usuario *ptrUsuario)
         fclose(ptrArquivoExtrato);
     }
     return 1;
+}
+
+int contaExtrato(Usuario *ptrUsuario){
+
+    FILE *ptrArquivoExtrato;
+    Extrato extrato;
+    int qtdExtrato = 0;
+    ptrArquivoExtrato = fopen("extrato.bin", "rb");
+
+    while(fread(&extrato, sizeof(Extrato), 1, ptrArquivoExtrato) == 1){
+        if(strcmp(extrato.CPF, ptrUsuario->cpf) == 0){
+            qtdExtrato++;
+        }
+    }
+
+    fclose(ptrArquivoExtrato);
+    return qtdExtrato;
+
 }

@@ -122,18 +122,39 @@ int venderCripto(Usuario *ptrUsuario)
             // Adiciona o valor final
             usuario.saldoReais += valorFinalVenda;
             usuario.saldoBTC -= valorVenda;
-            logExtrato(tipoOperacao, ptrUsuario, valorFinalVenda, criptomoedas.txVenda, criptomoedas.nomeCripto);        
         }
         else if (menu == 2)
         {
             usuario.saldoReais += valorFinalVenda;
             usuario.saldoETH -= valorVenda;
-            logExtrato(tipoOperacao, ptrUsuario, valorFinalVenda, criptomoedas.txVenda, criptomoedas.nomeCripto);
         }
         else if (menu == 3)
         {
             usuario.saldoReais += valorFinalVenda;
             usuario.saldoRIPPLE -= valorVenda;
+        }
+
+        usuario.qttExtrato = contaExtrato(ptrUsuario);
+
+        if (usuario.qttExtrato >= 99)
+        {
+            printf("Limite de extratos atingido\n");
+        }
+        else
+        {
+            if (menu == 1)
+            {
+                strcpy(criptomoedas.nomeCripto, "Bitcoin");
+            }
+            else if (menu == 2)
+            {
+                strcpy(criptomoedas.nomeCripto, "Ethereum");
+            }
+            else if (menu == 3)
+            {
+                strcpy(criptomoedas.nomeCripto, "Ripple");
+            }
+
             logExtrato(tipoOperacao, ptrUsuario, valorFinalVenda, criptomoedas.txVenda, criptomoedas.nomeCripto);
         }
 
@@ -143,7 +164,6 @@ int venderCripto(Usuario *ptrUsuario)
         // Escreve o registro atualizado
         fwrite(&usuario, bytes, 1, ptrArquivo);
 
-        
         fclose(ptrArquivo);
         fclose(ptrArquivoCripto);
 
