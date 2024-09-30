@@ -33,6 +33,7 @@ int depositar(Usuario *ptrUsuario)
         // posiciona o ponteiro no registro do usuário
         fseek(ptrArquivo, posicaoArquivo, SEEK_SET);
 
+
         // lê o registro do usuário
         if (fread(&usuario, bytes, 1, ptrArquivo) != 1)
         {
@@ -50,6 +51,7 @@ int depositar(Usuario *ptrUsuario)
         fwrite(&usuario, bytes, 1, ptrArquivo);
 
         usuario.qttExtrato = contaExtrato(ptrUsuario);
+
         if (usuario.qttExtrato >= 99)
         {
             printf("Limite de extratos (100) atingido!\n");

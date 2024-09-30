@@ -212,7 +212,7 @@ int main()
                 status = comprarCripto(ptrUsuario);
                 if (status == 0)
                 {
-                    printf("\nUsuario nao encontrado.\n");
+                    printf("Senha incorreta.\n");
                 }
                 else if(status == -1)
                 {
@@ -228,7 +228,7 @@ int main()
 
                 if (status == 0)
                 {
-                    printf("\nUsuario nao encontrado.\n");
+                    printf("Senha incorreta.\n");
                 }
                 else if(status == -1)
                 {

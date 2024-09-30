@@ -41,9 +41,8 @@ int comprarCripto(Usuario *ptrUsuario)
 
         if (strcmp(senha, usuario.senha) != 0)
         {
-            printf("Senha incorreta.\n");
             fclose(ptrArquivo);
-            return -1;
+            return 0;
         }
 
         // Seleciona a criptomoeda para compra
@@ -78,6 +77,7 @@ int comprarCripto(Usuario *ptrUsuario)
 
                 // Exibe a taxa de compra
                 printf("\nO valor de taxa de compra e de %.2f%% para a moeda %s\n", criptomoedas.txCompra, criptomoedas.nomeCripto);
+                exibirSaldo(ptrUsuario);
                 break;
             }
         }

@@ -85,11 +85,15 @@ int contaExtrato(Usuario *ptrUsuario){
     FILE *ptrArquivoExtrato;
     Extrato extrato;
     int qtdExtrato = 0;
-    ptrArquivoExtrato = fopen("extrato.bin", "rb");
+    ptrArquivoExtrato = fopen("extrato.bin", "rb+");
+
+    if(ptrArquivoExtrato == NULL){
+        return 0;
+    }
 
     while(fread(&extrato, sizeof(Extrato), 1, ptrArquivoExtrato) == 1){
-        if(strcmp(extrato.CPF, ptrUsuario->cpf) == 0){
-            qtdExtrato++;
+            if(strcmp(extrato.CPF, ptrUsuario->cpf) == 0){
+                    qtdExtrato++;
         }
     }
 

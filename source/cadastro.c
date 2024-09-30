@@ -30,6 +30,7 @@ int cadastro(Usuario *ptrUsuario){
     ptrUsuario->saldoETH = 0.0;
     ptrUsuario->saldoRIPPLE = 0.0;
     ptrUsuario->saldoReais = 0.0;
+    ptrUsuario->qttExtrato = 0;
 
     fwrite(ptrUsuario, bytes, 1, ptrArquivo);
     fclose(ptrArquivo);

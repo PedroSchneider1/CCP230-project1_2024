@@ -76,6 +76,7 @@ int venderCripto(Usuario *ptrUsuario)
 
                 // Exibe a taxa de venda
                 printf("\nO valor de taxa de venda e de %.2f%% para a moeda %s\n", criptomoedas.txVenda, criptomoedas.nomeCripto);
+                exibirSaldo(ptrUsuario);
                 break;
             }
         }
