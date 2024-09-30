@@ -26,7 +26,7 @@ int comprarCripto(Usuario *ptrUsuario)
         ptrArquivo = fopen("clientes.bin", "rb+");
         if (ptrArquivo == NULL)
         {
-            perror("Erro ao abrir o arquivo");
+            perror("Erro ao abrir o arquivo.");
             return -1;
         }
 
@@ -41,7 +41,7 @@ int comprarCripto(Usuario *ptrUsuario)
 
         if (strcmp(senha, usuario.senha) != 0)
         {
-            printf("Senha incorreta\n");
+            printf("Senha incorreta.\n");
             fclose(ptrArquivo);
             return -1;
         }
@@ -49,7 +49,7 @@ int comprarCripto(Usuario *ptrUsuario)
         // Seleciona a criptomoeda para compra
         do
         {
-            printf("Escolha sua criptomoeda: \n");
+            printf("\nEscolha sua criptomoeda: \n");
             printf("1 - Bitcoin\n");
             printf("2 - Ethereum\n");
             printf("3 - Ripple\n");
@@ -61,7 +61,7 @@ int comprarCripto(Usuario *ptrUsuario)
         ptrArquivoCripto = fopen("criptomoedas.bin", "rb");
         if (ptrArquivoCripto == NULL)
         {
-            perror("Erro ao abrir o arquivo de criptomoedas");
+            perror("Erro ao abrir o arquivo de criptomoedas.");
             fclose(ptrArquivo);
             return -1;
         }
@@ -77,7 +77,7 @@ int comprarCripto(Usuario *ptrUsuario)
                 foundCripto = 1;
 
                 // Exibe a taxa de compra
-                printf("O valor de taxa de compra e de %.2f%% para a moeda %s\n", criptomoedas.txCompra, criptomoedas.nomeCripto);
+                printf("\nO valor de taxa de compra e de %.2f%% para a moeda %s\n", criptomoedas.txCompra, criptomoedas.nomeCripto);
                 break;
             }
         }
@@ -97,7 +97,7 @@ int comprarCripto(Usuario *ptrUsuario)
             scanf("%f", &valorCompra);
             if (valorCompra > usuario.saldoReais)
             {
-                printf("Saldo insuficiente\n");
+                printf("Saldo insuficiente.\n");
                 valorCompra = -1;
             }
         } while (valorCompra < 0);
@@ -125,7 +125,7 @@ int comprarCripto(Usuario *ptrUsuario)
 
         if (usuario.qttExtrato >= 99)
         {
-            printf("Limite de extratos atingido\n");
+            printf("Limite de extratos (100) atingido!\n");
         }
         else
         {
@@ -159,7 +159,7 @@ int comprarCripto(Usuario *ptrUsuario)
     }
     else
     {
-        printf("CPF nao cadastrado\n");
+        printf("CPF nao cadastrado.\n");
     }
 
     return -1;

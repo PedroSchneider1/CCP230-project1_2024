@@ -58,7 +58,7 @@ int main()
             char cpf[255];
             do
             {
-                printf("Digite seu CPF (11 digitos): ");
+                printf("\nDigite seu CPF (11 digitos): ");
                 fgets(cpf, sizeof(cpf), stdin);
 
                 tamanhoCPF = strlen(cpf);
@@ -96,12 +96,12 @@ int main()
             
             if (status == 0)
             {
-                printf("CPF ja cadastrado\n");
+                printf("CPF ja cadastrado.\n\n");
                 break;
             }
             else if (status == 2)
             {
-                printf("Erro ao abrir o arquivo\n");
+                printf("Erro ao abrir o arquivo.\n\n");
                 break;
             }
             else
@@ -111,11 +111,11 @@ int main()
                 status = cadastro(ptrUsuario);
                 if (status == -1)
                 {
-                    printf("Quantidade maxima de clientes atingida\n");
+                    printf("Quantidade maxima de clientes atingida.\n\n");
                 }
                 else
                 {
-                    printf("Cadastro realizado com sucesso\n");
+                    printf("Cadastro realizado com sucesso!\n\n");
                 }
                 break;
             }
@@ -124,7 +124,7 @@ int main()
         // login
         case 2:
             limpaBuffer();
-            printf("Digite seu CPF: ");
+            printf("\nDigite seu CPF: ");
             fgets(ptrUsuario->cpf, sizeof(ptrUsuario->cpf), stdin);
 
             if (strlen(ptrUsuario->cpf) == 11) { // Limpa o buffer apenas se o CPF tiver 11 caracteres
@@ -141,7 +141,7 @@ int main()
             }
             else
             {
-                printf("CPF ou senha invalidos\n\n");
+                printf("CPF ou senha invalidos.\n\n");
             }
             break;
 
@@ -150,7 +150,7 @@ int main()
             break;
 
         default:
-            printf("Opção inválida, finalizando o código...");
+            printf("Opção invalida, finalizando o codigo...");
             exit(1);
             break;
         }
@@ -168,26 +168,26 @@ int main()
                 status = exibirSaldo(ptrUsuario);
                 if (status == 2)
                 {
-                    printf("Erro ao abrir o arquivo\n");
+                    printf("\t*Erro ao abrir o arquivo.\n");
                 }
                 else if (status == 0)
                 {
-                    printf("CPF não cadastrado\n");
+                    printf("\nCPF não cadastrado.\n");
                 }
                 break;
             case 2:
                 status = depositar(ptrUsuario);
                 if (status == -1)
                 {
-                    printf("Erro ao abrir o arquivo\n");
+                    printf("\t*Erro ao abrir o arquivo.\n");
                 }
                 else if(status == 0)
                 {
-                    printf("Usuario nao encontrado\n");
+                    printf("\nUsuario nao encontrado.\n");
                 }
                 else
                 {
-                    printf("Deposito realizado com sucesso\n");
+                    printf("\nDeposito realizado com sucesso!\n");
                 }
                 break;
 
@@ -196,15 +196,15 @@ int main()
                 status = sacar(ptrUsuario);
                 if (status == 0)
                 {
-                    printf("Usuario nao encontrado\n");
+                    printf("\nUsuario nao encontrado.\n");
                 }
                 else if(status == -1)
                 {
-                    printf("Erro ao abrir o arquivo\n");
+                    printf("\t*Erro ao abrir o arquivo.\n");
                 }
                 else
                 {
-                    printf("Saque realizado com sucesso\n");
+                    printf("\nSaque realizado com sucesso!\n");
                 }
 
                 break;
@@ -212,15 +212,15 @@ int main()
                 status = comprarCripto(ptrUsuario);
                 if (status == 0)
                 {
-                    printf("Usuario nao encontrado\n");
+                    printf("\nUsuario nao encontrado.\n");
                 }
                 else if(status == -1)
                 {
-                    printf("Erro ao abrir o arquivo\n");
+                    printf("\t*Erro ao abrir o arquivo.\n");
                 }
                 else
                 {
-                    printf("Compra realizada com sucesso\n");
+                    printf("\nCompra realizada com sucesso!\n");
                 }
                 break;
             case 5:
@@ -228,19 +228,19 @@ int main()
 
                 if (status == 0)
                 {
-                    printf("Usuario nao encontrado\n");
+                    printf("\nUsuario nao encontrado.\n");
                 }
                 else if(status == -1)
                 {
-                    printf("Erro ao abrir o arquivo\n");
+                    printf("\t*Erro ao abrir o arquivo.\n");
                 }
                 else if(status == 2)
                 {
-                    printf("Saldo insuficiente para venda\n");
+                    printf("\nSaldo insuficiente para venda.\n");
                 }
                 else
                 {
-                    printf("Venda realizada com sucesso\n");
+                    printf("\nVenda realizada com sucesso!\n");
                 }
                 break;
             case 6:
@@ -248,15 +248,15 @@ int main()
 
                 if(status == -1)
                 {
-                    printf("Erro ao abrir o arquivo\n");
+                    printf("\t*Erro ao abrir o arquivo.\n");
                 }
                 else if(status == 0)
                 {
-                    printf("Criptomoeda nao encontrada\n");
+                    printf("\nCriptomoeda nao encontrada.\n");
                 }
                 else
                 {
-                    printf("Cotação atualizada com sucesso\n");
+                    printf("\nCotação atualizada com sucesso!\n");
                 }
 
                 break;
@@ -264,15 +264,15 @@ int main()
                 status = consultaExtrato(ptrUsuario);
                 if(status == 0)
                 {
-                    printf("Extrato nao encontrado\n");
+                    printf("\nExtrato nao encontrado.\n");
                 }
                 else if(status == -1)
                 {
-                    printf("Erro ao abrir o arquivo\n");
+                    printf("\t*Erro ao abrir o arquivo.\n");
                 }
                 else
                 {
-                    printf("Extrato consultado com sucesso\n");
+                    printf("\nExtrato consultado com sucesso!\n");
                 }
                 break;
             case 8:

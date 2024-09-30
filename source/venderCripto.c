@@ -26,7 +26,7 @@ int venderCripto(Usuario *ptrUsuario)
         ptrArquivo = fopen("clientes.bin", "rb+");
         if (ptrArquivo == NULL)
         {
-            perror("Erro ao abrir o arquivo");
+            perror("Erro ao abrir o arquivo.");
             return -1;
         }
 
@@ -48,7 +48,7 @@ int venderCripto(Usuario *ptrUsuario)
         // Seleciona a criptomoeda para venda
         do
         {
-            printf("Escolha sua criptomoeda: \n");
+            printf("\nEscolha sua criptomoeda: \n");
             printf("1 - Bitcoin\n");
             printf("2 - Ethereum\n");
             printf("3 - Ripple\n");
@@ -60,7 +60,7 @@ int venderCripto(Usuario *ptrUsuario)
         ptrArquivoCripto = fopen("criptomoedas.bin", "rb");
         if (ptrArquivoCripto == NULL)
         {
-            perror("Erro ao abrir o arquivo de criptomoedas");
+            perror("Erro ao abrir o arquivo de criptomoedas.");
             fclose(ptrArquivo);
             return -1;
         }
@@ -75,14 +75,14 @@ int venderCripto(Usuario *ptrUsuario)
                 foundCripto = 1;
 
                 // Exibe a taxa de venda
-                printf("O valor de taxa de venda e de %.2f%% para a moeda %s\n", criptomoedas.txVenda, criptomoedas.nomeCripto);
+                printf("\nO valor de taxa de venda e de %.2f%% para a moeda %s\n", criptomoedas.txVenda, criptomoedas.nomeCripto);
                 break;
             }
         }
 
         if (!foundCripto)
         {
-            printf("Criptomoeda nao encontrada\n");
+            printf("Criptomoeda nao encontrada.\n");
             fclose(ptrArquivo);
             fclose(ptrArquivoCripto);
             return -1;
@@ -104,7 +104,6 @@ int venderCripto(Usuario *ptrUsuario)
             (menu == 2 && valorVenda > usuario.saldoETH) ||
             (menu == 3 && valorVenda > usuario.saldoRIPPLE))
         {
-            printf("Saldo insuficiente para venda.\n");
             fclose(ptrArquivo);
             fclose(ptrArquivoCripto);
             return 2;
@@ -138,7 +137,7 @@ int venderCripto(Usuario *ptrUsuario)
 
         if (usuario.qttExtrato >= 99)
         {
-            printf("Limite de extratos atingido\n");
+            printf("Limite de extratos (100) atingido!\n");
         }
         else
         {

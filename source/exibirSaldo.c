@@ -17,7 +17,7 @@ int exibirSaldo(Usuario *ptrUsuario){
         ptrArquivo = fopen("clientes.bin", "rb");
         if (ptrArquivo == NULL)
         {
-            perror("Erro ao abrir o arquivo");
+            perror("Erro ao abrir o arquivo.");
             return 0;
         }
 
@@ -27,18 +27,19 @@ int exibirSaldo(Usuario *ptrUsuario){
         fread(&usuario, sizeof(Usuario), 1, ptrArquivo);
 
         //exibe os dados do usuário
+        printf("\n");
         printf("CPF: %s\n", usuario.cpf);
         printf("Saldo em Reais: %.2f\n", usuario.saldoReais);
         printf("Saldo em Bitcoin: %.8lf\n", usuario.saldoBTC);
         printf("Saldo em Ethereum: %.8lf\n", usuario.saldoETH);
-        printf("Saldo em Ripple: %.8lf\n", usuario.saldoRIPPLE);
+        printf("Saldo em Ripple: %.8lf\n\n", usuario.saldoRIPPLE);
 
         fclose(ptrArquivo);
         return 1; //sucesso ao exibir o saldo
     }
     else
     {
-        printf("CPF nao cadastrado\n");
+        printf("CPF nao cadastrado.\n");
         return 0;
     }
 }

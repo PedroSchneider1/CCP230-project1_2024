@@ -20,7 +20,7 @@ int sacar(Usuario *ptrUsuario)
 
         if (ptrArquivo == NULL)
         {
-            perror("Erro ao abrir o arquivo");
+            perror("Erro ao abrir o arquivo.");
             return -1;
         }
 
@@ -52,7 +52,7 @@ int sacar(Usuario *ptrUsuario)
         usuario.qttExtrato = contaExtrato(ptrUsuario);
         if (usuario.qttExtrato >= 99)
         {
-            printf("Limite de extratos atingido\n");
+            printf("Limite de extratos (100) atingido!\n");
         }
         else
         {

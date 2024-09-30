@@ -13,7 +13,7 @@ void logExtrato(const char *tipoOperacao, Usuario *ptrUsuario, float valor, floa
 
     if (ptrArquivoExtrato == NULL)
     {
-        printf("Erro ao abrir o arquivo de extrato\n");
+        printf("Erro ao abrir o arquivo de extrato.\n");
         exit(1);
     }
     else

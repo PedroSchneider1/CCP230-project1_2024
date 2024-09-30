@@ -9,7 +9,7 @@ int login(Usuario *ptrUsuario){
     
     ptrArquivo = fopen("clientes.bin", "rb");
     if (ptrArquivo == NULL) {
-        perror("Nao ha usuarios cadastrados");
+        perror("Nao ha usuarios cadastrados.");
         return 0;
     }
 

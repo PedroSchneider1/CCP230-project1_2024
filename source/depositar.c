@@ -19,7 +19,7 @@ int depositar(Usuario *ptrUsuario)
         ptrArquivo = fopen("clientes.bin", "rb+");
         if (ptrArquivo == NULL)
         {
-            perror("Erro ao abrir o arquivo");
+            perror("Erro ao abrir o arquivo.");
             return -1;
         }
 
@@ -36,7 +36,7 @@ int depositar(Usuario *ptrUsuario)
         // lê o registro do usuário
         if (fread(&usuario, bytes, 1, ptrArquivo) != 1)
         {
-            perror("Erro ao ler o arquivo\n");
+            perror("Erro ao ler o arquivo.\n");
             return -1;
         }
 
@@ -52,7 +52,7 @@ int depositar(Usuario *ptrUsuario)
         usuario.qttExtrato = contaExtrato(ptrUsuario);
         if (usuario.qttExtrato >= 99)
         {
-            printf("Limite de extratos atingido\n");
+            printf("Limite de extratos (100) atingido!\n");
         }
         else
         {
@@ -64,7 +64,7 @@ int depositar(Usuario *ptrUsuario)
     }
     else
     {
-        printf("CPF nao cadastrado\n");
+        printf("CPF nao cadastrado.\n");
         return 0;
     }
 

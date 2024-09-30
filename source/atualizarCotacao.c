@@ -16,14 +16,14 @@ int atualizarCotacao()
 
     if (ptrArquivoCripto == NULL)
     {
-        perror("Erro ao abrir o arquivo");
+        perror("Erro ao abrir o arquivo.");
         return -1;
     }
 
     // Seleciona a criptomoeda para atualizar a cotação
     do
     {
-        printf("Escolha a criptomoeda para atualizar a cotacao: \n");
+        printf("\nEscolha a criptomoeda para atualizar a cotacao: \n");
         printf("1 - Bitcoin\n");
         printf("2 - Ethereum\n");
         printf("3 - Ripple\n");
@@ -42,7 +42,7 @@ int atualizarCotacao()
             foundCripto = 1;
 
             // Exibe a cotação antiga
-            printf("O valor de cotacao da criptomoeda e de %.8lf para a moeda %s\n", criptomoedas.cotacao, criptomoedas.nomeCripto);
+            printf("\nO valor de cotacao da criptomoeda e de %.8lf para a moeda %s\n", criptomoedas.cotacao, criptomoedas.nomeCripto);
 
             // Gera a seed aleatória
             srand(time(NULL));
@@ -51,10 +51,12 @@ int atualizarCotacao()
 
             do
             {
-                // Gera um valor aleatório entre -0.05 e 0.05 (ou seja, -5% e +5%)
-                //((float)rand() / RAND_MAX) gera um valor entre 0 e 1
-                //Multiplicando por 0.10, temos um valor entre 0 e 0.10
-                //Subtraindo 0.05, temos um valor entre -0.05 e 0.05
+                /*
+                Gera um valor aleatório entre -0.05 e 0.05 (ou seja, -5% e +5%)
+                ((float)rand() / RAND_MAX) gera um valor entre 0 e 1
+                Multiplicando por 0.10, temos um valor entre 0 e 0.10
+                Subtraindo 0.05, temos um valor entre -0.05 e 0.05
+                */
                 variacao = ((float)rand() / RAND_MAX) * 0.10 - 0.05;
 
             } while (variacao == 0);
@@ -62,9 +64,9 @@ int atualizarCotacao()
             float novaCotacao = criptomoedas.cotacao * (1 + variacao);
 
             // Exibe a cotação antiga, nova e a variação
-            printf("Cotacao antiga: %.8lf\n", criptomoedas.cotacao);
+            printf("\nCotacao antiga: %.8lf\n", criptomoedas.cotacao);
             printf("Nova cotacao: %.8lf\n", novaCotacao);
-            printf("Variacao de %.2f%%\n", variacao * 100);
+            printf("Variacao de %.2f%%\n\n", variacao * 100);
 
             // Atualiza a cotação no registro
             criptomoedas.cotacao = novaCotacao;

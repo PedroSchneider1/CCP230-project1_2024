@@ -16,7 +16,7 @@ int verificaCPF(Usuario *ptrUsuario){
         ptrArquivo = fopen("clientes.bin", "wb");
         if (ptrArquivo == NULL)
         {
-            perror("Erro ao criar o arquivo");
+            perror("Erro ao criar o arquivo.");
             return -1;
         }
         //arquivo vazio, retorna -1
