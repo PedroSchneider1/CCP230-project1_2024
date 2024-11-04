@@ -10,10 +10,10 @@ CFLAGS = -Wall
 
 # Lista de arquivos fonte
 INV_C_SOURCE = $(wildcard ./source/srcInvestidor/*.c)
-INV_H_SOURCE = $(wildcard ./source/srcInvestidor/*.h)
+H_SOURCE = $(wildcard ./source/*.h)
 
 ADM_C_SOURCE = $(wildcard ./source/srcAdm/*.c)
-ADM_H_SOURCE = $(wildcard ./source/srcAdm/*.h)
+
 
 # Variavel para limpeza
 RM = rm -f
@@ -23,10 +23,10 @@ RM = rm -f
 #		'$^' identifica os pre-requisitos (sources)
 all: $(TARGET_INVESTOR) $(TARGET_ADM)
 
-$(TARGET_INVESTOR): $(INV_C_SOURCE) $(INV_H_SOURCE)
+$(TARGET_INVESTOR): $(INV_C_SOURCE) $(H_SOURCE)
 	$(CC) $(CFLAGS) -o $@ $^
 
-$(TARGET_ADM): $(ADM_C_SOURCE) $(ADM_H_SOURCE)
+$(TARGET_ADM): $(ADM_C_SOURCE) $(H_SOURCE)
 	$(CC) $(CFLAGS) -o $@ $^
 
 # Regra para limpar os arquivos gerados
