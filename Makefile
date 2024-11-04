@@ -1,5 +1,6 @@
 # Nome do executável
-TARGET = exchange.exe
+TARGET_INVESTOR = exchange.exe
+TARGET_ADM = adm.exe
 
 # Compilador
 CC = gcc
@@ -8,18 +9,28 @@ CC = gcc
 CFLAGS = -Wall
 
 # Lista de arquivos fonte
-C_SOURCE=$(wildcard ./source/*.c)
-H_SOURCE=$(wildcard ./source/*.h)
+INV_C_SOURCE = $(wildcard ./source/srcInvestidor/*.c)
+INV_H_SOURCE = $(wildcard ./source/srcInvestidor/*.h)
+
+ADM_C_SOURCE = $(wildcard ./source/srcAdm/*.c)
+ADM_H_SOURCE = $(wildcard ./source/srcAdm/*.h)
 
 # Variavel para limpeza
 RM = rm -f
 
 # Regra principal: compilar o programa
-$(TARGET): $(C_SOURCE) $(H_SOURCE)
-	$(CC) $(CFLAGS) -o $(TARGET) $(C_SOURCE)
+# Obs.: '$@' identifica o target
+#		'$^' identifica os pre-requisitos (sources)
+all: $(TARGET_INVESTOR) $(TARGET_ADM)
+
+$(TARGET_INVESTOR): $(INV_C_SOURCE) $(INV_H_SOURCE)
+	$(CC) $(CFLAGS) -o $@ $^
+
+$(TARGET_ADM): $(ADM_C_SOURCE) $(ADM_H_SOURCE)
+	$(CC) $(CFLAGS) -o $@ $^
 
 # Regra para limpar os arquivos gerados
 clean:
-	@ $(RM) $(TARGET)
+	@ $(RM) *.bin $(TARGET_INVESTOR) $(TARGET_ADM)
 
 .PHONY: all clean
