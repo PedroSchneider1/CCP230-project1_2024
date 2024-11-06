@@ -62,5 +62,6 @@ int contaExtrato(Usuario *ptrUsuario);
 
 int exibirMenuADM();
 int cadastroInvestidor(Usuario *ptrUsuario);
+int excluirInvestidor(Usuario *ptrUsuario);
 
 #endif
