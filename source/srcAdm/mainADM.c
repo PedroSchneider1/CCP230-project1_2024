@@ -37,11 +37,13 @@ int main(){
     }
     fclose(ptrArquivo);
 
-    Usuario usuario, *ptrUsuario;
-    ptrUsuario = &usuario;
-    int retorno, status = 0;
+    int retorno;
 
     do{
+        Usuario usuario, *ptrUsuario;
+        ptrUsuario = &usuario;
+        int status = 0;
+       
         retorno = exibirMenuADM();
 
         switch (retorno)
@@ -50,11 +52,15 @@ int main(){
             limpaBuffer();
             status = cadastroInvestidor(ptrUsuario);
             if(!status){
-                printf("Algum erro ocorreu durante a operacao. Por favor, tente novamente.\n");
+                printf("Algum erro ocorreu durante a operacao. Por favor, tente novamente.\n\n");
             }
             break;
         case 2:
-            // excluirInvestidor();
+            limpaBuffer();
+            status = excluirInvestidor(ptrUsuario);
+            if(!status){
+                printf("Algum erro ocorreu durante a operacao. Por favor, tente novamente.\n\n");
+            }
             break;
         case 3:
             // cadastroCripto();
