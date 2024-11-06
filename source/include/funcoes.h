@@ -39,7 +39,6 @@ void limpaBuffer();
 int atualizarCotacao();
 
 
-
 //Funções de Investidor:
 
 int exibirMenuVisitante();

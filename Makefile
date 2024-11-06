@@ -6,7 +6,7 @@ TARGET_ADM = adm.exe
 CC = gcc
 
 # Flags
-CFLAGS = -Wall
+CFLAGS = -Wall -I./source/include
 
 # Lista de arquivos fonte
 INV_C_SOURCE = $(wildcard ./source/srcInvestidor/*.c)
