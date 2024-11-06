@@ -33,7 +33,14 @@ typedef struct{
     float taxaTransacao;
 }Extrato;
 
+
+//Funcoes Padrão
 void limpaBuffer();
+int atualizarCotacao();
+
+
+//Funções de Investidor:
+
 int exibirMenuVisitante();
 int exibirMenuCliente();
 int cadastro(Usuario *ptrUsuario);
@@ -44,9 +51,15 @@ int depositar(Usuario *ptrUsuario);
 int sacar(Usuario *ptrUsuario);
 int comprarCripto(Usuario *ptrUsuario);
 int venderCripto(Usuario *ptrUsuario);
-int atualizarCotacao();
 void logExtrato(const char *tipoOperacao, Usuario *ptrUsuario, float valor, float taxaTransacao, const char *nomeMoeda);
 int consultaExtrato(Usuario *ptrUsuario);
 int contaExtrato(Usuario *ptrUsuario);
+
+
+//============================================================================================================================//
+
+//Funções de ADM:
+
+int exibirMenuADM();
 
 #endif
