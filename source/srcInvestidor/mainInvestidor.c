@@ -246,13 +246,9 @@ int main()
             case 6:
                 status = atualizarCotacao();
 
-                if(status == -1)
+                if(status)
                 {
-                    printf("\t*Erro ao abrir o arquivo.\n");
-                }
-                else if(status == 0)
-                {
-                    printf("\nCriptomoeda nao encontrada.\n");
+                    printf("\t*Erro ao realizar operacao.\n");
                 }
                 else
                 {
