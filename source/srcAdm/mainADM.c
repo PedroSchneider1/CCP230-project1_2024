@@ -63,7 +63,11 @@ int main(){
             }
             break;
         case 3:
-            // cadastroCripto();
+            limpaBuffer();
+            status = cadastroCripto();
+            if(!status){
+                printf("Algum erro ocorreu durante a operacao. Por favor, tente novamente.\n\n");
+            }
             break;
         case 4:
             // excluirCripto();
