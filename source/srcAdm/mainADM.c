@@ -51,19 +51,23 @@ int main(){
         case 1:
             limpaBuffer();
             status = cadastroInvestidor(ptrUsuario);
-            if(!status){
+            if(status){
                 printf("Algum erro ocorreu durante a operacao. Por favor, tente novamente.\n\n");
             }
             break;
         case 2:
             limpaBuffer();
             status = excluirInvestidor(ptrUsuario);
-            if(!status){
+            if(status){
                 printf("Algum erro ocorreu durante a operacao. Por favor, tente novamente.\n\n");
             }
             break;
         case 3:
-            // cadastroCripto();
+            limpaBuffer();
+            status = cadastroCripto();
+            if(status){
+                printf("Algum erro ocorreu durante a operacao. Por favor, tente novamente.\n\n");
+            }
             break;
         case 4:
             // excluirCripto();

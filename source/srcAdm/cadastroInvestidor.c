@@ -51,12 +51,12 @@ int cadastroInvestidor(Usuario *ptrUsuario){
     if (status == 0)
     {
         printf("CPF ja cadastrado.\n\n");
-        return 0;
+        return 1;
     }
     else if (status == 2)
     {
         printf("Erro ao abrir o arquivo.\n\n");
-        return 0;
+        return 1;
     }
     else
     {
@@ -66,12 +66,12 @@ int cadastroInvestidor(Usuario *ptrUsuario){
         if (status == -1)
         {
             printf("Quantidade maxima de clientes atingida.\n\n");
-            return 0;
+            return 1;
         }
         else
         {
             printf("Cadastro realizado com sucesso!\n\n");
-            return 1;
+            return 0;
         }
     }
 }
