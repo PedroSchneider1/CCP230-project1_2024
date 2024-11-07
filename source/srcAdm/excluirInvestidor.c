@@ -11,7 +11,7 @@ int excluirInvestidor(Usuario *ptrUsuario){
     if (ptrArquivo == NULL)
     {
         perror("Erro ao abrir o arquivo");
-        return 0;
+        return 1;
     }
 
     printf("Digite o CPF do investidor que deseja excluir: ");
@@ -23,7 +23,7 @@ int excluirInvestidor(Usuario *ptrUsuario){
     {
         printf("CPF não encontrado.\n");
         fclose(ptrArquivo);
-        return 0;
+        return 1;
     }
 
     fseek(ptrArquivo, posicaoArquivo, SEEK_SET);
@@ -33,5 +33,5 @@ int excluirInvestidor(Usuario *ptrUsuario){
     if(fwrite(ptrUsuario, bytes, 1, ptrArquivo))
         printf("Investidor excluido com sucesso!\n\n");
     fclose(ptrArquivo);
-    return 1;
+    return 0;
 }
