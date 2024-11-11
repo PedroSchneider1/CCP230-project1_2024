@@ -79,7 +79,10 @@ int main(){
             // consultaExtrato();
             break;
         case 7:
-            // atualizarCotacao();
+            status = atualizarCotacao();
+            if(status){
+                printf("Algum erro ocorreu durante a operacao. Por favor, tente novamente.\n\n");
+            }
             break;
         case 8:
             printf("Saindo...\n");

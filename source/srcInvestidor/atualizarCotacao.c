@@ -10,35 +10,37 @@ int atualizarCotacao()
     Criptomoedas criptomoedas;
 
     int bytesCripto = sizeof(Criptomoedas);
-    int menu;
+    int menu, i = 0;
 
     ptrArquivoCripto = fopen("criptomoedas.bin", "rb+");
 
     if (ptrArquivoCripto == NULL)
     {
         perror("Erro ao abrir o arquivo.");
-        return -1;
+        return 1;
     }
 
     // Seleciona a criptomoeda para atualizar a cotação
     do
     {
         printf("\nEscolha a criptomoeda para atualizar a cotacao: \n");
-        printf("1 - Bitcoin\n");
-        printf("2 - Ethereum\n");
-        printf("3 - Ripple\n");
+        while (fread(&criptomoedas, bytesCripto, 1, ptrArquivoCripto) == 1)
+        {
+            printf("%d - %s\n", i + 1, criptomoedas.nomeCripto);
+            i++;
+        }
         scanf("%d", &menu);
 
-    } while (menu < 1 || menu > 3);
+    } while (menu < 1 || menu > (i+1));
 
     int foundCripto = 0;
+    i = 0;
 
+    rewind(ptrArquivoCripto);
     while (fread(&criptomoedas, bytesCripto, 1, ptrArquivoCripto) == 1)
     {
-        if ((menu == 1 && strcmp(criptomoedas.nomeCripto, "Bitcoin") == 0) ||
-            (menu == 2 && strcmp(criptomoedas.nomeCripto, "Ethereum") == 0) ||
-            (menu == 3 && strcmp(criptomoedas.nomeCripto, "Ripple") == 0))
-        {
+        i++;
+        if(menu == i){
             foundCripto = 1;
 
             // Exibe a cotação antiga
@@ -88,8 +90,8 @@ int atualizarCotacao()
     if (!foundCripto)
     {
         printf("Criptomoeda nao encontrada.\n");
-        return 0;
+        return 1;
     }
 
-    return 1;
+    return 0;
 }
