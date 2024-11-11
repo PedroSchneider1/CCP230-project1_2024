@@ -21,7 +21,7 @@ int excluirInvestidor(Usuario *ptrUsuario){
     long posicaoArquivo = verificaCPF(ptrUsuario);
     if (posicaoArquivo != 0)
     {
-        printf("CPF não encontrado.\n");
+        printf("CPF nao encontrado.\n");
         fclose(ptrArquivo);
         return 1;
     }

@@ -46,49 +46,32 @@ int comprarCripto(Usuario *ptrUsuario)
         }
 
         // Seleciona a criptomoeda para compra
+        ptrArquivoCripto = fopen("criptomoedas.bin", "r+");
+        int indice = 1;
+        
+        printf("Escolha sua criptomoeda: \n");
+        while(fread(&criptomoedas, bytesCripto, 1, ptrArquivoCripto))
+        {
+            printf("%d - %s\n", indice, criptomoedas.nomeCripto);
+            indice++;
+        }
+
+        // Solicita a escolha da criptomoeda
         do
         {
-            printf("\nEscolha sua criptomoeda: \n");
-            printf("1 - Bitcoin\n");
-            printf("2 - Ethereum\n");
-            printf("3 - Ripple\n");
             scanf("%d", &menu);
+            printf("Escolha invalida, tente novamente");
+        } while (menu < 1 || menu >= indice);
 
-        } while (menu < 1 || menu > 3);
-
-        // Abre o arquivo de criptomoedas
-        ptrArquivoCripto = fopen("criptomoedas.bin", "rb");
-        if (ptrArquivoCripto == NULL)
+        // Procure e exibe a taxa da criptomoeda escolhida
+        fseek(ptrArquivoCripto, 0, SEEK_SET);
+        for(int i = 0; i < menu; i++)
         {
-            perror("Erro ao abrir o arquivo de criptomoedas.");
-            fclose(ptrArquivo);
-            return -1;
+            fread(&criptomoedas, bytesCripto, 1, ptrArquivoCripto);
         }
 
-        // Busca e exibe a taxa da criptomoeda escolhida
-        int foundCripto = 0;
-        while (fread(&criptomoedas, bytesCripto, 1, ptrArquivoCripto) == 1)
-        {
-            if ((menu == 1 && strcmp(criptomoedas.nomeCripto, "Bitcoin") == 0) ||
-                (menu == 2 && strcmp(criptomoedas.nomeCripto, "Ethereum") == 0) ||
-                (menu == 3 && strcmp(criptomoedas.nomeCripto, "Ripple") == 0))
-            {
-                foundCripto = 1;
-
-                // Exibe a taxa de compra
-                printf("\nO valor de taxa de compra e de %.2f%% para a moeda %s\n", criptomoedas.txCompra, criptomoedas.nomeCripto);
-                exibirSaldo(ptrUsuario);
-                break;
-            }
-        }
-
-        if (!foundCripto)
-        {
-            printf("Criptomoeda nao encontrada.\n");
-            fclose(ptrArquivoCripto);
-            fclose(ptrArquivo);
-            return -1;
-        }
+        printf("\nO valor de taxa de compra e de %.2f%% para a moeda %s\n", criptomoedas.txCompra, criptomoedas.nomeCripto);
+        exibirSaldo(ptrUsuario);
 
         // Solicita o valor da compra
         do

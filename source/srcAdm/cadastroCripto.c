@@ -40,8 +40,8 @@ int cadastroCripto(){
     printf("\nConfirme os dados:\n");
     printf("\tNome: %s\n", criptomoedas.nomeCripto);
     printf("\tCotacao: %f\n", criptomoedas.cotacao);
-    printf("\tTaxa de Compra: %f\n", criptomoedas.txCompra);
-    printf("\tTaxa de Venda: %f\n", criptomoedas.txVenda);
+    printf("\tTaxa de Compra: %.2f%%\n", criptomoedas.txCompra);
+    printf("\tTaxa de Venda: %.2f%%\n", criptomoedas.txVenda);
     printf("Deseja confirmar o cadastro? (s/n): ");
     limpaBuffer();
     char confirmacao = getchar();
