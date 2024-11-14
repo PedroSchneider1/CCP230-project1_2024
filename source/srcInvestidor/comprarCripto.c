@@ -5,14 +5,16 @@
 
 int comprarCripto(Usuario *ptrUsuario)
 {
-    FILE *ptrArquivo, *ptrArquivoCripto;
+    FILE *ptrArquivo, *ptrArquivoCripto, *ptrArquivoAtivos;
     Usuario usuario;
     Criptomoedas criptomoedas;
+    Ativos ativo;
 
     const char *tipoOperacao = "Compra";
 
     int bytes = sizeof(Usuario);
     int bytesCripto = sizeof(Criptomoedas);
+    int bytesAtivos = sizeof(Ativos);
     float valorCompra = 0.0;
     int menu;
     long posicaoArquivo;
@@ -48,9 +50,9 @@ int comprarCripto(Usuario *ptrUsuario)
         // Seleciona a criptomoeda para compra
         ptrArquivoCripto = fopen("criptomoedas.bin", "r+");
         int indice = 1;
-        
+
         printf("Escolha sua criptomoeda: \n");
-        while(fread(&criptomoedas, bytesCripto, 1, ptrArquivoCripto))
+        while (fread(&criptomoedas, bytesCripto, 1, ptrArquivoCripto))
         {
             printf("%d - %s\n", indice, criptomoedas.nomeCripto);
             indice++;
@@ -59,13 +61,13 @@ int comprarCripto(Usuario *ptrUsuario)
         // Solicita a escolha da criptomoeda
         do
         {
+            printf("Digite o numero da criptomoeda: ");
             scanf("%d", &menu);
-            printf("Escolha invalida, tente novamente");
         } while (menu < 1 || menu >= indice);
 
         // Procure e exibe a taxa da criptomoeda escolhida
         fseek(ptrArquivoCripto, 0, SEEK_SET);
-        for(int i = 0; i < menu; i++)
+        for (int i = 0; i < menu; i++)
         {
             fread(&criptomoedas, bytesCripto, 1, ptrArquivoCripto);
         }
@@ -90,19 +92,57 @@ int comprarCripto(Usuario *ptrUsuario)
         float valorFinalCompra = valorCompra - (valorCompra * taxa);
 
         // Atualiza o saldo da criptomoeda correspondente
-        if (menu == 1)
+
+        ptrArquivoAtivos = fopen("ativos.bin", "rb+");
+        if (ptrArquivoAtivos == NULL)
         {
-            usuario.saldoBTC += valorFinalCompra / criptomoedas.cotacao;
-            usuario.qttExtrato++;
+            ptrArquivoAtivos = fopen("ativos.bin", "ab+");
+            if (ptrArquivoAtivos == NULL)
+            {
+                perror("Erro ao abrir o arquivo.");
+                return -1;
+            }
         }
-        else if (menu == 2)
+
+        // Inicializa a posição e o indicador de existência do ativo
+        long posicaoArquivoAtivos = 0;
+        int encontrado = 0;
+
+        // Procura o ativo correspondente do usuário no arquivo de ativos
+        while (fread(&ativo, bytesAtivos, 1, ptrArquivoAtivos))
         {
-            usuario.saldoETH += valorFinalCompra / criptomoedas.cotacao;
+            if (strcmp(ativo.CPF, usuario.cpf) == 0 && strcmp(ativo.nomeMoeda, criptomoedas.nomeCripto) == 0)
+            {
+                posicaoArquivoAtivos = ftell(ptrArquivoAtivos) - bytesAtivos;
+                printf("Saldo anterior: %.2f\n", ativo.saldoCripto); // Para debug
+                encontrado = 1;
+                break;
+            }
         }
-        else if (menu == 3)
+
+        // Se o ativo não foi encontrado, inicializa um novo ativo para o usuário
+        if (!encontrado)
         {
-            usuario.saldoRIPPLE += valorFinalCompra / criptomoedas.cotacao;
+            strcpy(ativo.CPF, usuario.cpf);
+            strcpy(ativo.nomeMoeda, criptomoedas.nomeCripto);
+            ativo.saldoCripto = 0;
         }
+
+        ativo.saldoCripto += valorFinalCompra / criptomoedas.cotacao;
+
+        if (encontrado)
+        {
+            // Atualiza o ativo na posição onde foi encontrado
+            fseek(ptrArquivoAtivos, posicaoArquivoAtivos, SEEK_SET);
+        }
+        else
+        {
+            // Posiciona o ponteiro no final do arquivo para adicionar o novo ativo
+            fseek(ptrArquivoAtivos, 0, SEEK_END);
+        }
+
+        fwrite(&ativo, bytesAtivos, 1, ptrArquivoAtivos);
+        fclose(ptrArquivoAtivos);
 
         usuario.qttExtrato = contaExtrato(ptrUsuario);
 
@@ -112,20 +152,7 @@ int comprarCripto(Usuario *ptrUsuario)
         }
         else
         {
-            if (menu == 1)
-            {
-                strcpy(criptomoedas.nomeCripto, "Bitcoin");
-            }
-            else if (menu == 2)
-            {
-                strcpy(criptomoedas.nomeCripto, "Ethereum");
-            }
-            else if (menu == 3)
-            {
-                strcpy(criptomoedas.nomeCripto, "Ripple");
-            }
-
-            logExtrato(tipoOperacao, ptrUsuario, valorCompra, (taxa * 100), criptomoedas.nomeCripto);
+            logExtrato(tipoOperacao, ptrUsuario, valorCompra, (taxa * 100), ativo.nomeMoeda);
         }
 
         // Atualiza o saldo em reais

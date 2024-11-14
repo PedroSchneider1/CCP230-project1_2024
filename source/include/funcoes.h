@@ -8,9 +8,6 @@ typedef struct
     char cpf[12];
     char senha[255];
     float saldoReais;
-    double saldoBTC;
-    double saldoETH;
-    double saldoRIPPLE;
 
 }Usuario;
 
@@ -32,6 +29,14 @@ typedef struct{
     float valor;
     float taxaTransacao;
 }Extrato;
+
+typedef struct{
+
+    char CPF[12];
+    char nomeMoeda[255];
+    float saldoCripto;
+
+}Ativos;
 
 
 //Funcoes Padrão

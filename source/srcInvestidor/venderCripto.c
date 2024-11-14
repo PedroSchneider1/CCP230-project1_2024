@@ -5,7 +5,7 @@
 
 int venderCripto(Usuario *ptrUsuario)
 {
-    FILE *ptrArquivo, *ptrArquivoCripto;
+    /*FILE *ptrArquivo, *ptrArquivoCripto;
     Usuario usuario;
     Criptomoedas criptomoedas;
 
@@ -168,9 +168,9 @@ int venderCripto(Usuario *ptrUsuario)
         fclose(ptrArquivoCripto);
 
         return 1; // Sucesso
-    }
-    else
-    {
+    }*/
+    //else
+    //{
         return 0;
-    }
+    //}
 }

@@ -170,10 +170,7 @@ int main()
                 {
                     printf("\t*Erro ao abrir o arquivo.\n");
                 }
-                else if (status == 0)
-                {
-                    printf("\nCPF não cadastrado.\n");
-                }
+
                 break;
             case 2:
                 status = depositar(ptrUsuario);

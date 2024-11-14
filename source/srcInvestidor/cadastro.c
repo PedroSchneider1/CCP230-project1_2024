@@ -25,10 +25,6 @@ int cadastro(Usuario *ptrUsuario){
         fclose(ptrArquivo);
         return -1;
     }
-
-    ptrUsuario->saldoBTC = 0.0; 
-    ptrUsuario->saldoETH = 0.0;
-    ptrUsuario->saldoRIPPLE = 0.0;
     ptrUsuario->saldoReais = 0.0;
     ptrUsuario->qttExtrato = 0;
 
