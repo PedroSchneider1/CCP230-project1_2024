@@ -35,11 +35,6 @@ int verificaCPF(Usuario *ptrUsuario){
             strcpy(ptrUsuario->cpf, usuario.cpf);
             strcpy(ptrUsuario->senha, usuario.senha);
             ptrUsuario->saldoReais = usuario.saldoReais;
-            ptrUsuario->saldoBTC = usuario.saldoBTC;
-            ptrUsuario->saldoETH = usuario.saldoETH;
-            ptrUsuario->saldoRIPPLE = usuario.saldoRIPPLE;
-            
-            
             fclose(ptrArquivo);
             return posicaoArquivo;
         }
