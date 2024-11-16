@@ -69,5 +69,6 @@ int exibirMenuADM();
 int cadastroInvestidor(Usuario *ptrUsuario);
 int excluirInvestidor(Usuario *ptrUsuario);
 int cadastroCripto();
+int excluirCripto();
 
 #endif
