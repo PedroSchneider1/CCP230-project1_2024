@@ -70,7 +70,7 @@ int main(){
             }
             break;
         case 4:
-            // excluirCripto();
+            excluirCripto();
             break;
         case 5:
             // consultaSaldo();
