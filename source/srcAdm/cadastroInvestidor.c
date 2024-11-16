@@ -5,6 +5,7 @@
 #include <funcoes.h>
 
 int cadastroInvestidor(Usuario *ptrUsuario){
+    FILE *ptrArquivo;
     size_t tamanhoCPF;
     int isNumeric = 1;
     int status = 0;
@@ -70,8 +71,10 @@ int cadastroInvestidor(Usuario *ptrUsuario){
         }
         else
         {
-            printf("Cadastro realizado com sucesso!\n\n");
-            return 0;
+          ptrArquivo = fopen("clientes.bin", "rb+");
+          fwrite(ptrUsuario, sizeof(Usuario), 1, ptrArquivo);
+          printf("Cadastro realizado com sucesso!\n\n");
+          return 0;
         }
     }
 }

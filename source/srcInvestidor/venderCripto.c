@@ -1,176 +1,170 @@
+#include "funcoes.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "funcoes.h"
+#include <time.h>
 
-int venderCripto(Usuario *ptrUsuario)
-{
-    FILE *ptrArquivo, *ptrArquivoCripto;
-    Usuario usuario;
-    Criptomoedas criptomoedas;
+int venderCripto(Usuario *ptrUsuario) {
+  FILE *ptrArquivoAtivos, *ptrArquivoCripto, *ptrArquivoUsuarios;
+  Ativos ativo;
+  Criptomoedas criptomoeda;
+  Usuario usuarioTemp;
 
-    const char *tipoOperacao = "Venda";
+  const char *tipoOperacao = "Venda";
+  float valorVenda = 0.0;
+  int foundCripto = 0, foundUsuario = 0, menu, indice = 1;
+  long posicaoAtivo, posicaoUsuario;
 
-    int bytes = sizeof(Usuario);
-    int bytesCripto = sizeof(Criptomoedas);
-    float valorVenda = 0.0;
-    int menu;
-    long posicaoArquivo;
-    char senha[255];
+  // Verifica o CPF e a senha do usuário
+  if (verificaCPF(ptrUsuario) < 0) {
+    printf("CPF não encontrado.\n");
+    return 0;
+  }
 
-    posicaoArquivo = verificaCPF(ptrUsuario);
+  limpaBuffer();
+  char senha[255];
+  printf("Digite sua senha: ");
+  fgets(senha, sizeof(senha), stdin);
+  if (strcmp(senha, ptrUsuario->senha) != 0) {
+    printf("Senha incorreta.\n");
+    return 0;
+  }
 
-    // Verifica se o CPF foi encontrado
-    if (posicaoArquivo >= 0)
-    {
-        ptrArquivo = fopen("clientes.bin", "rb+");
-        if (ptrArquivo == NULL)
-        {
-            perror("Erro ao abrir o arquivo.");
-            return -1;
+  // Exibe os ativos do usuário
+  ptrArquivoAtivos = fopen("ativos.bin", "rb+");
+  if (ptrArquivoAtivos == NULL) {
+    perror("Erro ao abrir o arquivo de ativos.");
+    return -1;
+  }
+
+  printf("\nEscolha o ativo que deseja vender:\n");
+  rewind(ptrArquivoAtivos);
+
+    // Lista os ativos disponíveis
+    while (fread(&ativo, sizeof(Ativos), 1, ptrArquivoAtivos) == 1) {
+        if (strcmp(ativo.CPF, ptrUsuario->cpf) == 0 && strcmp(ativo.nomeMoeda, "*") != 0) {
+            printf("%d - %s: %.8f\n", indice, ativo.nomeMoeda, ativo.saldoCripto);
+            indice++;
         }
-
-        // Posiciona o ponteiro no registro do usuário e lê o registro
-        fseek(ptrArquivo, posicaoArquivo, SEEK_SET);
-        fread(&usuario, bytes, 1, ptrArquivo);
-
-        // Verifica a senha do usuário
-        limpaBuffer();
-        printf("Digite sua senha: ");
-        fgets(senha, sizeof(senha), stdin);
-
-        if (strcmp(senha, usuario.senha) != 0)
-        {
-            fclose(ptrArquivo);
-            return 0;
-        }
-
-        // Seleciona a criptomoeda para venda
-        do
-        {
-            printf("\nEscolha sua criptomoeda: \n");
-            printf("1 - Bitcoin\n");
-            printf("2 - Ethereum\n");
-            printf("3 - Ripple\n");
-            scanf("%d", &menu);
-
-        } while (menu < 1 || menu > 3);
-
-        // Abre o arquivo de criptomoedas
-        ptrArquivoCripto = fopen("criptomoedas.bin", "rb");
-        if (ptrArquivoCripto == NULL)
-        {
-            perror("Erro ao abrir o arquivo de criptomoedas.");
-            fclose(ptrArquivo);
-            return -1;
-        }
-
-        int foundCripto = 0;
-        while (fread(&criptomoedas, bytesCripto, 1, ptrArquivoCripto) == 1)
-        {
-            if ((menu == 1 && strcmp(criptomoedas.nomeCripto, "Bitcoin") == 0) ||
-                (menu == 2 && strcmp(criptomoedas.nomeCripto, "Ethereum") == 0) ||
-                (menu == 3 && strcmp(criptomoedas.nomeCripto, "Ripple") == 0))
-            {
-                foundCripto = 1;
-
-                // Exibe a taxa de venda
-                printf("\nO valor de taxa de venda e de %.2f%% para a moeda %s\n", criptomoedas.txVenda, criptomoedas.nomeCripto);
-                exibirSaldo(ptrUsuario);
-                break;
-            }
-        }
-
-        if (!foundCripto)
-        {
-            printf("Criptomoeda nao encontrada.\n");
-            fclose(ptrArquivo);
-            fclose(ptrArquivoCripto);
-            return -1;
-        }
-
-        // Solicita o valor da venda
-        do
-        {
-            printf("Digite o valor da venda: ");
-            scanf("%f", &valorVenda);
-            if (valorVenda <= 0)
-            {
-                printf("Valor de venda invalido.\n");
-            }
-        } while (valorVenda <= 0);
-
-        // Verifica se o saldo da criptomoeda é suficiente para realizar a venda
-        if ((menu == 1 && valorVenda > usuario.saldoBTC) ||
-            (menu == 2 && valorVenda > usuario.saldoETH) ||
-            (menu == 3 && valorVenda > usuario.saldoRIPPLE))
-        {
-            fclose(ptrArquivo);
-            fclose(ptrArquivoCripto);
-            return 2;
-        }
-
-        // Converte o valor da venda em criptomoedas para reais
-        float valorVendaReais = valorVenda * criptomoedas.cotacao;
-
-        // Aplica a taxa de venda, subtraindo o percentual do valor em reais
-        float valorFinalVenda = valorVendaReais - (valorVendaReais * (criptomoedas.txVenda / 100));
-
-        // Atualiza o saldo do usuário
-        if (menu == 1)
-        {
-            // Adiciona o valor final
-            usuario.saldoReais += valorFinalVenda;
-            usuario.saldoBTC -= valorVenda;
-        }
-        else if (menu == 2)
-        {
-            usuario.saldoReais += valorFinalVenda;
-            usuario.saldoETH -= valorVenda;
-        }
-        else if (menu == 3)
-        {
-            usuario.saldoReais += valorFinalVenda;
-            usuario.saldoRIPPLE -= valorVenda;
-        }
-
-        usuario.qttExtrato = contaExtrato(ptrUsuario);
-
-        if (usuario.qttExtrato >= 99)
-        {
-            printf("Limite de extratos (100) atingido!\n");
-        }
-        else
-        {
-            if (menu == 1)
-            {
-                strcpy(criptomoedas.nomeCripto, "Bitcoin");
-            }
-            else if (menu == 2)
-            {
-                strcpy(criptomoedas.nomeCripto, "Ethereum");
-            }
-            else if (menu == 3)
-            {
-                strcpy(criptomoedas.nomeCripto, "Ripple");
-            }
-
-            logExtrato(tipoOperacao, ptrUsuario, valorFinalVenda, criptomoedas.txVenda, criptomoedas.nomeCripto);
-        }
-
-        // Posiciona novamente no início do registro
-        fseek(ptrArquivo, posicaoArquivo, SEEK_SET);
-
-        // Escreve o registro atualizado
-        fwrite(&usuario, bytes, 1, ptrArquivo);
-
-        fclose(ptrArquivo);
-        fclose(ptrArquivoCripto);
-
-        return 1; // Sucesso
     }
-    else
-    {
+
+    if (indice == 1) { // Não foram encontrados ativos para o CPF
+        printf("Você não possui ativos disponíveis para venda.\n");
+        fclose(ptrArquivoAtivos);
         return 0;
     }
+
+    // Solicita a escolha do ativo
+    do {
+        printf("Digite o número do ativo que deseja vender: ");
+        scanf("%d", &menu);
+        limpaBuffer();
+    } while (menu < 1 || menu >= indice);
+
+    rewind(ptrArquivoAtivos);
+
+    int contador = 1; // Índice usado para comparar com a escolha do usuário
+    while (fread(&ativo, sizeof(Ativos), 1, ptrArquivoAtivos) == 1) {
+        if (strcmp(ativo.CPF, ptrUsuario->cpf) == 0 && strcmp(ativo.nomeMoeda, "*") != 0) {
+            if (contador == menu) {
+                break; // Ativo encontrado
+            }
+            contador++;
+        }
+    }
+
+    // Captura a posição do ativo no arquivo
+    posicaoAtivo = ftell(ptrArquivoAtivos) - sizeof(Ativos);
+    printf("\nVocê selecionou o ativo: %s com saldo de %.8f.\n",
+           ativo.nomeMoeda, ativo.saldoCripto);
+
+  ptrArquivoCripto = fopen("criptomoedas.bin", "rb");
+  if (ptrArquivoCripto == NULL) {
+    perror("Erro ao abrir o arquivo de criptomoedas.");
+    fclose(ptrArquivoAtivos);
+    return -1;
+  }
+
+  while (fread(&criptomoeda, sizeof(Criptomoedas), 1, ptrArquivoCripto) == 1) {
+    if (strcmp(criptomoeda.nomeCripto, ativo.nomeMoeda) == 0) {
+      printf("\nTaxa de venda: %.2f%%\nCotação: %.2f\n", criptomoeda.txVenda,
+             criptomoeda.cotacao);
+      foundCripto = 1;
+      break;
+    }
+  }
+
+  fclose(ptrArquivoCripto);
+  if (!foundCripto) {
+    printf("Informações da criptomoeda não encontradas.\n");
+    fclose(ptrArquivoAtivos);
+    return 0;
+  }
+
+    // Solicita o valor da venda
+    do {
+        printf("Digite o valor da venda: ");
+        scanf("%f", &valorVenda);
+
+        // O 1e-6 evita erro na comparação por causa do float
+        if (valorVenda <= 0 || valorVenda > ativo.saldoCripto + 1e-6) {
+            printf("Valor inválido. Verifique seu saldo.\n");
+        }
+    } while (valorVenda <= 0 || valorVenda > ativo.saldoCripto + 1e-6);
+
+
+  // Calcula o valor final da venda
+  float valorVendaReais = valorVenda * criptomoeda.cotacao;
+  float valorFinalVenda =
+      valorVendaReais - (valorVendaReais * (criptomoeda.txVenda / 100));
+
+  // Atualiza o saldo do ativo e do usuário
+  ativo.saldoCripto -= valorVenda;
+  ptrUsuario->saldoReais += valorFinalVenda;
+
+  // Atualiza ou remove o ativo no arquivo
+  char nomeMoeda[50];
+  strcpy(nomeMoeda, ativo.nomeMoeda);
+  
+  fseek(ptrArquivoAtivos, posicaoAtivo, SEEK_SET);
+  if (ativo.saldoCripto <= 0) {
+    strcpy(ativo.nomeMoeda, "*"); // Marca como removido
+  }
+  
+  fwrite(&ativo, sizeof(Ativos), 1, ptrArquivoAtivos);
+  fclose(ptrArquivoAtivos);
+
+  // Atualiza o saldo do usuário no arquivo de usuários
+  ptrArquivoUsuarios = fopen("clientes.bin", "rb+");
+  if (ptrArquivoUsuarios == NULL) {
+    perror("Erro ao abrir o arquivo de usuários.");
+    return -1;
+  }
+
+  while (fread(&usuarioTemp, sizeof(Usuario), 1, ptrArquivoUsuarios) == 1) {
+    if (strcmp(usuarioTemp.cpf, ptrUsuario->cpf) == 0) {
+      foundUsuario = 1;
+      posicaoUsuario = ftell(ptrArquivoUsuarios) - sizeof(Usuario);
+      break;
+    }
+  }
+
+  if (foundUsuario) {
+    fseek(ptrArquivoUsuarios, posicaoUsuario, SEEK_SET);
+    fwrite(ptrUsuario, sizeof(Usuario), 1, ptrArquivoUsuarios);
+  } else {
+    printf("Usuário não encontrado no arquivo de usuários.\n");
+  }
+
+  fclose(ptrArquivoUsuarios);
+
+  // Grava no extrato
+  logExtrato(tipoOperacao, ptrUsuario, valorFinalVenda, criptomoeda.txVenda,
+             nomeMoeda);
+  ptrUsuario->qttExtrato++;
+
+  printf("Venda realizada com sucesso! Valor recebido: R$%.2f\n",
+         valorFinalVenda);
+
+  return 1;
 }

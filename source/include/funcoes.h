@@ -8,9 +8,6 @@ typedef struct
     char cpf[12];
     char senha[255];
     float saldoReais;
-    double saldoBTC;
-    double saldoETH;
-    double saldoRIPPLE;
 
 }Usuario;
 
@@ -33,6 +30,14 @@ typedef struct{
     float taxaTransacao;
 }Extrato;
 
+typedef struct{
+
+    char CPF[12];
+    char nomeMoeda[255];
+    float saldoCripto;
+
+}Ativos;
+
 
 //Funcoes Padrão
 void limpaBuffer();
@@ -51,7 +56,7 @@ int depositar(Usuario *ptrUsuario);
 int sacar(Usuario *ptrUsuario);
 int comprarCripto(Usuario *ptrUsuario);
 int venderCripto(Usuario *ptrUsuario);
-void logExtrato(const char *tipoOperacao, Usuario *ptrUsuario, float valor, float taxaTransacao, const char *nomeMoeda);
+void logExtrato(const char *tipoOperacao, Usuario *ptrUsuario, float valor, float taxaTransacao, char *nomeMoeda);
 int consultaExtrato(Usuario *ptrUsuario);
 int contaExtrato(Usuario *ptrUsuario);
 

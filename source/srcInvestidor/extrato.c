@@ -4,7 +4,7 @@
 #include <time.h>
 #include "funcoes.h"
 
-void logExtrato(const char *tipoOperacao, Usuario *ptrUsuario, float valor, float taxaTransacao, const char *nomeMoeda)
+void logExtrato(const char *tipoOperacao, Usuario *ptrUsuario, float valor, float taxaTransacao, char *nomeMoeda)
 {
     FILE *ptrArquivoExtrato;
     time_t data;

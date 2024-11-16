@@ -22,9 +22,9 @@ int exibirMenuADM() {
         printf("4 - Excluir criptomoedas\n");
         printf("5 - Consultar saldo de um investidor\n");
         printf("6 - Consultar extrato de um investidor\n");
-        printf("7 - Atualizar cotação de criptomoedas\n");
+        printf("7 - Atualizar cotacao de criptomoedas\n");
         printf("8 - Sair\n");
-        printf("Escolha uma opção: ");
+        printf("Escolha uma opcao: ");
         
         if (scanf("%d", &menu) != 1 || menu < 1 || menu > 8) {
             // Limpa o buffer caso o scanf não tenha sido bem sucedido

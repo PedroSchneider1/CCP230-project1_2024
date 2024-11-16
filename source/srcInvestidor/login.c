@@ -15,7 +15,7 @@ int login(Usuario *ptrUsuario){
 
     while(fread(&usuario, sizeof(Usuario), 1, ptrArquivo) == 1)
     {
-        if(strcmp(usuario.cpf, ptrUsuario->cpf) == 0 && strcmp(usuario.senha, ptrUsuario->senha) == 0)
+        if((strcmp(usuario.cpf, ptrUsuario->cpf) == 0) && (strcmp(usuario.senha, ptrUsuario->senha) == 0) && (usuario.cpf[0] != 0))
         {
             fclose(ptrArquivo);
             return 1;
