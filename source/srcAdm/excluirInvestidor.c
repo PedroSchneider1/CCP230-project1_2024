@@ -5,6 +5,7 @@
 
 int excluirInvestidor(Usuario *ptrUsuario){
     FILE *ptrArquivo;
+    size_t tamanhoCPF;
     size_t bytes = sizeof(Usuario);
     
     ptrArquivo = fopen("clientes.bin", "rb+");
@@ -15,23 +16,25 @@ int excluirInvestidor(Usuario *ptrUsuario){
     }
 
     printf("Digite o CPF do investidor que deseja excluir: ");
-    fgets(ptrUsuario->cpf, 12, stdin);
-    ptrUsuario->cpf[strcspn(ptrUsuario->cpf, "\n")] = 0;
+    fgets(ptrUsuario->cpf, sizeof(ptrUsuario->cpf), stdin);
+    tamanhoCPF = strlen(ptrUsuario->cpf);
+    if (ptrUsuario->cpf[tamanhoCPF - 1] == '\n') {
+        ptrUsuario->cpf[tamanhoCPF - 1] = '\0';
+    }
 
     long posicaoArquivo = verificaCPF(ptrUsuario);
-    if (posicaoArquivo != 0)
-    {
+    if (posicaoArquivo < 0) { // Ajuste para tratar o caso "não encontrado"
         printf("CPF nao encontrado.\n");
         fclose(ptrArquivo);
         return 1;
     }
 
     fseek(ptrArquivo, posicaoArquivo, SEEK_SET);
-    fread(ptrUsuario, bytes, 1, ptrArquivo);
-    fseek(ptrArquivo, posicaoArquivo, SEEK_SET);
     ptrUsuario->cpf[0] = '*';
-    if(fwrite(ptrUsuario, bytes, 1, ptrArquivo))
+    if (fwrite(ptrUsuario, bytes, 1, ptrArquivo)) {
         printf("Investidor excluido com sucesso!\n\n");
+    }
     fclose(ptrArquivo);
     return 0;
+
 }

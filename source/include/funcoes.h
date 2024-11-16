@@ -56,7 +56,7 @@ int depositar(Usuario *ptrUsuario);
 int sacar(Usuario *ptrUsuario);
 int comprarCripto(Usuario *ptrUsuario);
 int venderCripto(Usuario *ptrUsuario);
-void logExtrato(const char *tipoOperacao, Usuario *ptrUsuario, float valor, float taxaTransacao, const char *nomeMoeda);
+void logExtrato(const char *tipoOperacao, Usuario *ptrUsuario, float valor, float taxaTransacao, char *nomeMoeda);
 int consultaExtrato(Usuario *ptrUsuario);
 int contaExtrato(Usuario *ptrUsuario);
 

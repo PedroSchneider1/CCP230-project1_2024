@@ -48,7 +48,7 @@ int comprarCripto(Usuario *ptrUsuario)
         }
 
         // Seleciona a criptomoeda para compra
-        ptrArquivoCripto = fopen("criptomoedas.bin", "r+");
+        ptrArquivoCripto = fopen("criptomoedas.bin", "rb+");
         int indice = 1;
 
         printf("Escolha sua criptomoeda: \n");

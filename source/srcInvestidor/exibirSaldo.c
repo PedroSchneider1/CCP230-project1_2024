@@ -43,7 +43,7 @@ int exibirSaldo(Usuario *ptrUsuario){
             {
                 printf("Saldo de %s: %.2f\n", ativo.nomeMoeda, ativo.saldoCripto);
             }
-            else if(strcmp(ativo.CPF, ptrUsuario->cpf) == 0)
+            else if(strcmp(ativo.CPF, ptrUsuario->cpf) == 0 && (strcmp(ativo.nomeMoeda, "*") != 0))
             {
                 printf("Saldo de %s: %.8f\n", ativo.nomeMoeda, ativo.saldoCripto);
             }
